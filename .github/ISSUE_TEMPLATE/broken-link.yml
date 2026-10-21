@@ -1,0 +1,24 @@
+name: Broken link
+description: Report a link in the resource index that no longer resolves
+labels: ["link"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where is the broken link?
+      placeholder: resources/by-question/transfer.md
+    validations:
+      required: true
+  - type: textarea
+    id: which
+    attributes:
+      label: Which link?
+      description: The paper title, or the URL itself.
+      placeholder: https://doi.org/10.1109/...
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What happens?
+      description: The error you saw, and anything that helps locate the correct reference.

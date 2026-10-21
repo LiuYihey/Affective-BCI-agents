@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+
+jobs:
+  links:
+    name: Reference links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check every link resolves
+        run: python scripts/check_links.py
+
+  citations:
+    name: Prose citations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check prose citations exist in the index
+        run: python scripts/check_citations.py
+
+  relative-links:
+    name: Relative links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check relative links point at real files
+        run: python scripts/check_relative_links.py
+
+  index:
+    name: Index is consistent
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The index is generated from the survey's private source, which is not
+      # in this repository, so CI cannot rebuild it. What CI can check is that
+      # the committed output still agrees with itself.
+      - name: Check the index agrees with itself
+        run: python scripts/check_index.py

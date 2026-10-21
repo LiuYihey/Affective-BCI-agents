@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: Affective BCI Agents
+message: >-
+  If you use the resource index in this repository, please cite the survey
+  that the index is built from.
+type: software
+license: MIT
+repository-code: "https://github.com/LiuYihey/Affective-BCI-agents"
+url: "https://github.com/LiuYihey/Affective-BCI-agents"
+keywords:
+  - affective computing
+  - brain-computer interface
+  - electroencephalography
+  - closed-loop neurotechnology
+  - resource index
+authors:
+  - name: Liu Yihao
+    alias: LiuYihey
+    affiliation: Nanjing University and Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences
+  - name: Liang Dong
+    affiliation: Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences
+  - name: Zheng Hairong
+    affiliation: Nanjing University
+  - name: Zhu Yanjie
+    affiliation: Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences

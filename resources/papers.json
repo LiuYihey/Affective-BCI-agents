@@ -1,0 +1,3184 @@
+{
+  "clusters": {
+    "datasets": {
+      "question": "Which corpus should I use?",
+      "summary": "Where the signal comes from, how the label was produced, and how many people it covers. Labels assigned by the experimenter, reported by the participant, or read from behaviour are not interchangeable.",
+      "aspects": [
+        "Signal source and quality",
+        "Target definition",
+        "Corpus size",
+        "Annotation cost"
+      ]
+    },
+    "model": {
+      "question": "How do I turn a multichannel recording into a prediction?",
+      "summary": "Architectures for organising a recording before prediction, and the training objectives that decide which variations the model keeps.",
+      "aspects": [
+        "CNN / GNN / Transformer / SSM",
+        "Self-supervised pre-training",
+        "Cross-dataset pre-training",
+        "Device-agnostic representations"
+      ]
+    },
+    "transfer": {
+      "question": "Will it still work on a person I have never seen?",
+      "summary": "Recordings change across people, across sessions, and across devices. The unit held out during testing states how far a result can travel.",
+      "aspects": [
+        "Within-subject to cross-dataset",
+        "Domain generalisation",
+        "Unsupervised adaptation",
+        "Personalisation"
+      ]
+    },
+    "evaluation": {
+      "question": "Is that accuracy real?",
+      "summary": "The test split decides which question an accuracy answers. A favourable split or repeated access to the test set can beat a better architecture.",
+      "aspects": [
+        "Split protocols",
+        "Leakage",
+        "Spectral confounds",
+        "Model explanation checks"
+      ]
+    },
+    "closed-loop": {
+      "question": "How do I wire a decoder into a loop that stays safe?",
+      "summary": "Sense turns the signal into a belief, Think proposes an action, Act decides what may reach the user. A harness keeps an adaptive system inside the range that was tested.",
+      "aspects": [
+        "Sense / Think / Act",
+        "Action gate",
+        "Agent harness",
+        "Contingency and control groups"
+      ]
+    },
+    "deployment": {
+      "question": "Can I run this in real time, on real hardware?",
+      "summary": "A fast classifier can still respond too late. Output reaches the user through a display, an interface, or a stimulation device, and each destination has its own risk and its own approver.",
+      "aspects": [
+        "Latency and energy",
+        "Monitoring and assessment",
+        "Neurofeedback",
+        "Responsive neuromodulation"
+      ]
+    },
+    "maturity": {
+      "question": "How strong is the evidence, and how mature is the system?",
+      "summary": "Lab asks whether the state can be estimated. Pilot lets the estimate change something during a limited experiment. Field uses the complete system repeatedly in its intended setting.",
+      "aspects": [
+        "Lab / Pilot / Field",
+        "Reported gaps in pilot studies",
+        "Reproducibility",
+        "Outcome measures"
+      ]
+    },
+    "governance": {
+      "question": "Where is the boundary of what the system may do?",
+      "summary": "A neural recording can reveal more than the purpose for which it was collected. Consent, authorisation and deletion need their own rules.",
+      "aspects": [
+        "Re-identification risk",
+        "Consent scope",
+        "Retained state",
+        "Clinician oversight"
+      ]
+    }
+  },
+  "corpora": [
+    {
+      "name": "SEED",
+      "group": "Stimulus-elicited targets",
+      "scale": "15 participants; 62 channels; 3 sessions",
+      "modality": "Scalp EEG",
+      "target": "Three emotion classes",
+      "obtained": "Experimenter-assigned film-clip condition, copied to every window of the trial",
+      "source": "zheng2015investigating",
+      "source_link": "https://doi.org/10.1109/tamd.2015.2431497",
+      "refs": [
+        "zheng2015investigating",
+        "qing2026dive"
+      ]
+    },
+    {
+      "name": "SEED-IV",
+      "group": "Stimulus-elicited targets",
+      "scale": "15 participants; 62 channels; 3 sessions",
+      "modality": "Scalp EEG",
+      "target": "Four emotion classes",
+      "obtained": "Experimenter-assigned film-clip condition",
+      "source": "zheng2019emotionmeter",
+      "source_link": "https://doi.org/10.1109/tcyb.2018.2797176",
+      "refs": [
+        "zheng2019emotionmeter"
+      ]
+    },
+    {
+      "name": "SEED-V",
+      "group": "Stimulus-elicited targets",
+      "scale": "16 participants; 3 sessions",
+      "modality": "Scalp EEG plus eye tracking",
+      "target": "Five emotion classes",
+      "obtained": "Experimenter-assigned film-clip condition",
+      "source": "liu2022comparing",
+      "source_link": "https://doi.org/10.1109/tcds.2021.3071170",
+      "refs": [
+        "liu2022comparing"
+      ]
+    },
+    {
+      "name": "FACED",
+      "group": "Stimulus-elicited targets",
+      "scale": "123 participants; 32 channels",
+      "modality": "Scalp EEG",
+      "target": "Nine emotion classes",
+      "obtained": "Experimenter-assigned video condition",
+      "source": "chen2023faced",
+      "source_link": "https://doi.org/10.1038/s41597-023-02650-w",
+      "refs": [
+        "chen2023faced"
+      ]
+    },
+    {
+      "name": "DEAP",
+      "group": "Self-reported targets",
+      "scale": "32 participants; 32 channels",
+      "modality": "Scalp EEG",
+      "target": "Continuous valence and arousal",
+      "obtained": "Post-trial self-rating on fixed valence-arousal scales",
+      "source": "koelstra2012deap",
+      "source_link": "https://doi.org/10.1109/t-affc.2011.15",
+      "refs": [
+        "koelstra2012deap"
+      ]
+    },
+    {
+      "name": "MAHNOB-HCI",
+      "group": "Self-reported targets",
+      "scale": "27 participants; 32 channels",
+      "modality": "Scalp EEG plus ECG, respiration, and skin temperature",
+      "target": "Continuous valence, arousal, and dominance",
+      "obtained": "Post-trial self-rating on nine-point scales",
+      "source": "soleymani2012mahnob",
+      "source_link": "https://doi.org/10.1109/t-affc.2011.25",
+      "refs": [
+        "soleymani2012mahnob"
+      ]
+    },
+    {
+      "name": "DREAMER",
+      "group": "Self-reported targets",
+      "scale": "23 participants; 14 channels",
+      "modality": "Scalp EEG plus ECG",
+      "target": "Valence, arousal, and dominance",
+      "obtained": "Post-trial self-rating on 1-5 Self-Assessment Manikins",
+      "source": "katsigiannis2018dreamer",
+      "source_link": "https://doi.org/10.1109/JBHI.2017.2688239",
+      "refs": [
+        "katsigiannis2018dreamer"
+      ]
+    },
+    {
+      "name": "AMIGOS",
+      "group": "Self-reported targets",
+      "scale": "40 participants; 14 channels",
+      "modality": "Scalp EEG plus ECG and GSR",
+      "target": "Valence and arousal",
+      "obtained": "Post-clip self-rating, complemented by external annotation",
+      "source": "mirandacorrea2021amigos",
+      "source_link": "https://doi.org/10.1109/TAFFC.2018.2884461",
+      "refs": [
+        "mirandacorrea2021amigos"
+      ]
+    },
+    {
+      "name": "MPED",
+      "group": "Self-reported targets",
+      "scale": "23 participants; 62 channels",
+      "modality": "Scalp EEG plus ECG, GSR, and respiration",
+      "target": "Seven emotion categories",
+      "obtained": "Post-video ratings on PANAS, SAM, and DES questionnaires",
+      "source": "song2019mped",
+      "source_link": "https://doi.org/10.1109/ACCESS.2019.2891579",
+      "refs": [
+        "song2019mped"
+      ]
+    },
+    {
+      "name": "SEED-VII",
+      "group": "Self-reported targets",
+      "scale": "20 participants; 62 channels; 4 sessions",
+      "modality": "Scalp EEG plus eye tracking",
+      "target": "Six basic emotions plus neutral with continuous intensity ratings",
+      "obtained": "Post-session self-rating of intensity on 1-10 scales",
+      "source": "jiang2025seedvii",
+      "source_link": "https://doi.org/10.1109/taffc.2024.3485057",
+      "refs": [
+        "jiang2025seedvii"
+      ]
+    },
+    {
+      "name": "MAD",
+      "group": "Self-reported targets",
+      "scale": "18 participants; synchronized multimodal sessions",
+      "modality": "Scalp EEG plus ECG, BCG, EOG, EMG, PPG, and RGB-D video",
+      "target": "Seven emotion categories with intensity ratings",
+      "obtained": "Self-report",
+      "source": "guo2026mad",
+      "source_link": "https://doi.org/10.48550/arXiv.2603.06206",
+      "refs": [
+        "guo2026mad"
+      ]
+    },
+    {
+      "name": "Intracranial mood",
+      "group": "Self-reported targets",
+      "scale": "7 participants; multiday recordings",
+      "modality": "Implanted iEEG",
+      "target": "Mood variation",
+      "obtained": "Intermittent self-report over days",
+      "source": "sani2018mood",
+      "source_link": "https://doi.org/10.1038/nbt.4200",
+      "refs": [
+        "sani2018mood"
+      ]
+    },
+    {
+      "name": "Cross-task iEEG",
+      "group": "Self-reported targets",
+      "scale": "22 participants (18 offline, 4 online)",
+      "modality": "Implanted iEEG, gray and white matter",
+      "target": "Continuous valence and arousal",
+      "obtained": "Repeated self-ratings during both tasks",
+      "source": "yang2026crosstask",
+      "source_link": "https://doi.org/10.1038/s43588-026-01021-w",
+      "refs": [
+        "yang2026crosstask"
+      ]
+    },
+    {
+      "name": "Prefrontal iEEG",
+      "group": "Self-reported targets",
+      "scale": "3 participants; high-density prefrontal coverage",
+      "modality": "Implanted iEEG",
+      "target": "Depression severity",
+      "obtained": "Computerized adaptive self-report (CAT-DI)",
+      "source": "xiao2023decoding",
+      "source_link": "https://doi.org/10.1016/j.biopsych.2023.01.020",
+      "refs": [
+        "xiao2023decoding"
+      ]
+    },
+    {
+      "name": "Multiday iEEG",
+      "group": "Expression-observed targets",
+      "scale": "11 participants; 116 h of recording",
+      "modality": "Implanted iEEG",
+      "target": "Affective behavior",
+      "obtained": "Observer annotation of spontaneous behavior from video",
+      "source": "bijanzadeh2022decoding",
+      "source_link": "https://doi.org/10.1038/s41562-022-01310-0",
+      "refs": [
+        "bijanzadeh2022decoding"
+      ]
+    },
+    {
+      "name": "Subcallosal cingulate DBS",
+      "group": "Expression-observed targets",
+      "scale": "6 participants with LFP (cohort of 10); 24-week follow-up",
+      "modality": "Implanted LFP in stimulation-off windows",
+      "target": "Recovery trajectory",
+      "obtained": "Clinician-rated response and remission criteria",
+      "source": "alagapan2023cingulate",
+      "source_link": "https://doi.org/10.1038/s41586-023-06541-3",
+      "refs": [
+        "alagapan2023cingulate"
+      ]
+    }
+  ],
+  "papers": [
+    {
+      "key": "guo2026mad",
+      "title": "MAD: A Multimodal and Multi-perspective Affective Dataset with Hierarchical Annotations",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2603.06206",
+      "arxiv": "https://arxiv.org/abs/2603.06206",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets",
+        "evaluation"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets",
+        "Target validity",
+        "__intro__"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [],
+      "note": "Records all three target sources separately, and defines the annotation levels used throughout."
+    },
+    {
+      "key": "tang2026peakflow",
+      "title": "PeakFlow: Peak-Guided Coarse-to-Refined Modeling for EEG-Based Dynamic Affective Trajectory Prediction",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.18671",
+      "arxiv": "https://arxiv.org/abs/2607.18671",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 2,
+      "code": "https://github.com/jukebox333/PeakFlow",
+      "levels": [],
+      "note": "Handles the case where the peak in a rating does not mark the peak in the signal."
+    },
+    {
+      "key": "xu2025refs",
+      "title": "REFS: Robust EEG feature selection with missing multi-dimensional annotation for emotion recognition",
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arXiv.2508.05933",
+      "arxiv": "https://arxiv.org/abs/2508.05933",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Feature selection when part of the annotation is missing."
+    },
+    {
+      "key": "kukhilava2025evaluation",
+      "title": "Evaluation in EEG Emotion Recognition: State-of-the-Art Review and Unified Framework",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2505.18175",
+      "arxiv": "https://arxiv.org/abs/2505.18175",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets",
+        "evaluation",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Evaluation Settings and Leakage",
+        "__intro__"
+      ],
+      "cite_count": 4,
+      "code": "https://github.com/EmotionLab/EEGain",
+      "levels": [],
+      "note": "A survey of 216 papers on how the split was chosen."
+    },
+    {
+      "key": "jiang2025seedvii",
+      "title": "SEED-VII: A Multimodal Dataset of Six Basic Emotions With Continuous Labels for Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/taffc.2024.3485057",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Six emotions plus neutral with continuous intensity, and four sessions."
+    },
+    {
+      "key": "liu2024fewchannel",
+      "title": "Emotion Recognition From Few-Channel EEG Signals by Integrating Deep Feature Aggregation and Transfer Learning",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2024",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2023.3336531",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Acquisition Modalities"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Decoding from few electrodes, which is what a wearable actually provides."
+    },
+    {
+      "key": "chen2023faced",
+      "title": "A large finer-grained affective computing EEG dataset",
+      "venue": "Scientific Data",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41597-023-02650-w",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "The largest stimulus-elicited corpus here: 123 participants, nine classes."
+    },
+    {
+      "key": "qasim2023neuronal",
+      "title": "Neuronal activity in the human amygdala and hippocampus enhances emotional memory encoding",
+      "venue": "Nature Human Behaviour",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41562-022-01502-8",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Acquisition Modalities"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Amygdala and hippocampus activity predicting mood on the next day."
+    },
+    {
+      "key": "dehghani2020probing",
+      "title": "Probing fMRI brain connectivity and activity changes during emotion regulation by EEG neurofeedback",
+      "venue": "Frontiers in Human Neuroscience",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.3389/fnhum.2022.988890",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets",
+        "closed-loop"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "fMRI connectivity during emotion regulation, the imaging counterpart."
+    },
+    {
+      "key": "liu2022comparing",
+      "title": "Comparing Recognition Performance and Robustness of Multimodal Deep Learning Models for Multimodal Emotion Recognition",
+      "venue": "IEEE Transactions on Cognitive and Developmental Systems",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/tcds.2021.3071170",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Adds eye tracking to SEED-V, so the label has an independent behavioural channel."
+    },
+    {
+      "key": "mirandacorrea2021amigos",
+      "title": "AMIGOS: A Dataset for Affect, Personality and Mood Research on Individuals and Groups",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2018.2884461",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Self-report plus external annotation, which makes target substitution visible."
+    },
+    {
+      "key": "piho2020mutual",
+      "title": "A Mutual Information Based Adaptive Windowing of Informative EEG for Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/taffc.2018.2840973",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Choosing the analysis window from the data instead of by hand."
+    },
+    {
+      "key": "zheng2019emotionmeter",
+      "title": "EmotionMeter: A Multimodal Framework for Recognizing Human Emotions",
+      "venue": "IEEE Transactions on Cybernetics",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/tcyb.2018.2797176",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Four emotion classes, three sessions, the standard benchmark for cross-session work."
+    },
+    {
+      "key": "song2019mped",
+      "title": "MPED: A Multi-Modal Physiological Emotion Database for Discrete Emotion Recognition",
+      "venue": "IEEE Access",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/ACCESS.2019.2891579",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Seven emotion categories with three questionnaires, the hardest categorical corpus here."
+    },
+    {
+      "key": "katsigiannis2018dreamer",
+      "title": "DREAMER: A Database for Emotion Recognition Through EEG and ECG Signals From Wireless Low-cost Off-the-Shelf Devices",
+      "venue": "IEEE Journal of Biomedical and Health Informatics",
+      "year": "2018",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/JBHI.2017.2688239",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Valence, arousal and dominance with ECG, widely used for cross-subject comparison."
+    },
+    {
+      "key": "zheng2015investigating",
+      "title": "Investigating Critical Frequency Bands and Channels for EEG-Based Emotion Recognition with Deep Neural Networks",
+      "venue": "IEEE Transactions on Autonomous Mental Development",
+      "year": "2015",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/tamd.2015.2431497",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "The reference corpus for stimulus-elicited emotion labels."
+    },
+    {
+      "key": "soleymani2012mahnob",
+      "title": "A Multimodal Database for Affect Recognition and Implicit Tagging",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2012",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/t-affc.2011.25",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Valence, arousal and dominance with peripheral channels and predictability ratings."
+    },
+    {
+      "key": "koelstra2012deap",
+      "title": "DEAP: A Database for Emotion Analysis Using Physiological Signals",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2012",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/t-affc.2011.15",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "datasets",
+      "clusters": [
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "The standard continuous valence and arousal corpus."
+    },
+    {
+      "key": "hwang2026b",
+      "title": "B[FM]$^2$: Brain Foundation Model via Flow Matching with SplitUNet",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.20812",
+      "arxiv": "https://arxiv.org/abs/2606.20812",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "A flow-matching formulation of the brain foundation model."
+    },
+    {
+      "key": "zhou2026brainbench",
+      "title": "BrainBench: Benchmarking Large Language Models for Comprehensive EEG Understanding",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2608.04156",
+      "arxiv": "https://arxiv.org/abs/2608.04156",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model",
+        "closed-loop"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training",
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Instruction-conditioned benchmarks for language models that analyse EEG."
+    },
+    {
+      "key": "mahuas2026cocot",
+      "title": "CoCoT-EEG: Contrastive-Pretrained Multiscale Convolutional Transformer for EEG Decoding",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.09543",
+      "arxiv": "https://arxiv.org/abs/2607.09543",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Contrastive pre-training before the task-specific stage."
+    },
+    {
+      "key": "minnick2026implicit",
+      "title": "Implicit Behavioral Decoding from Next-Step Spike Forecasts at Population Scale",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2605.12999",
+      "arxiv": "https://arxiv.org/abs/2605.12999",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Behaviour decoded implicitly, from the next step of the signal."
+    },
+    {
+      "key": "lopes2026learning",
+      "title": "Learning aligned EEG representations with subject-specific encoders",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.16462",
+      "arxiv": "https://arxiv.org/abs/2606.16462",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Shared representations with a subject-specific encoder on top."
+    },
+    {
+      "key": "weng2026masked",
+      "title": "Masked Generative-Contrastive Representation Learning for Cross-Dataset EEG-Based Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2607.04139",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2607.04139",
+      "arxiv": "https://arxiv.org/abs/2607.04139",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Masked and generative objectives combined for cross-subject learning."
+    },
+    {
+      "key": "gong2026mscgc",
+      "title": "MSCGC-KAN: Multi-scale Causal Graph Convolution and Kolmogorov-Arnold Feature Mapping for EEG Emotion Recognition",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2605.26624",
+      "arxiv": "https://arxiv.org/abs/2605.26624",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Causal graph convolution with a Kolmogorov-Arnold parameterisation."
+    },
+    {
+      "key": "fallahi2026neuroshield",
+      "title": "NeuroShield: A Device-Agnostic Foundation Model for EEG Authentication",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.20673",
+      "arxiv": "https://arxiv.org/abs/2606.20673",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model",
+        "governance"
+      ],
+      "sections": [
+        "Governance",
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "Representations that identify the person who produced a recording."
+    },
+    {
+      "key": "li2025universal",
+      "title": "One Model for All: Universal Pre-training for EEG based Emotion Recognition across Heterogeneous Datasets and Paradigms",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2026",
+      "type": "article",
+      "doi": "",
+      "arxiv": "https://arxiv.org/abs/2511.08444",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model",
+        "transfer",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "Transfer",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [],
+      "note": "A shared channel vocabulary, and a subject-specific encoder on top of it."
+    },
+    {
+      "key": "gui2026spotr",
+      "title": "SPOTR: Spatio-temporal Pooling One-Token Reconstruction for Universal Physiological Signal Self-supervised Learning",
+      "venue": "Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI-ECAI)",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "",
+      "arxiv": "https://arxiv.org/abs/2606.21973",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/5GYYYYY/SPOTR",
+      "levels": [],
+      "note": "One-token reconstruction as the pre-training objective."
+    },
+    {
+      "key": "segal2026stst",
+      "title": "STST-JEPA: Shallow-Target Spatio-Temporal Joint Embedding Prediction Architecture For EEG Self-Supervised Learning",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.06629",
+      "arxiv": "https://arxiv.org/abs/2607.06629",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Joint embedding prediction for spatio-temporal structure."
+    },
+    {
+      "key": "sigdel2026rg",
+      "title": "The RG-Flow Transformer: Encoding Scale-Free Dynamics in Scarce EEG",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.11950",
+      "arxiv": "https://arxiv.org/abs/2607.11950",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Scale-free dynamics, for corpora where there are few subjects."
+    },
+    {
+      "key": "cui2026transformer",
+      "title": "Transformer Based Model for Spatiotemporal Feature Learning in EEG Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2606.10718",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2606.10718",
+      "arxiv": "https://arxiv.org/abs/2606.10718",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A transformer over the spatio-temporal dimension of the recording."
+    },
+    {
+      "key": "wang2025fourier",
+      "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+      "venue": "Medical Image Computing and Computer Assisted Intervention - MICCAI 2025",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1007/978-3-032-05162-2_2",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "evaluation",
+        "model"
+      ],
+      "sections": [
+        "Evaluation Settings and Leakage",
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Builds the periodic and aperiodic distinction into the architecture."
+    },
+    {
+      "key": "sandino2025learning",
+      "title": "Learning the relative composition of EEG signals using pairwise relative shift pretraining",
+      "venue": "Workshop on Foundation Models for the Brain and Body (BrainBodyFM) at the Conference on Neural Information Processing Systems (NeurIPS)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "",
+      "arxiv": "",
+      "url": "https://openreview.net/forum?id=kk8EUOiILZ",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Pairwise relations instead of absolute values, so amplitude shifts do not matter."
+    },
+    {
+      "key": "zhou2024mimamba",
+      "title": "miMamba: EEG-based Emotion Recognition with Multi-scale Inverted Mamba Models",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2025.3587443",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A state-space backbone that scales to long sequences."
+    },
+    {
+      "key": "zhang2024brantx",
+      "title": "Brant-X: A Unified Physiological Signal Alignment Framework",
+      "venue": "Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD '24)",
+      "year": "2024",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3637528.3671953",
+      "arxiv": "",
+      "url": "https://doi.org/10.1145/3637528.3671953",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "One alignment model across several physiological signals."
+    },
+    {
+      "key": "zhang2023brant",
+      "title": "Brant: Foundation Model for Intracranial Neural Signal",
+      "venue": "Advances in Neural Information Processing Systems 36 (NeurIPS 2023)",
+      "year": "2023",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.52202/075280-1144",
+      "arxiv": "",
+      "url": "https://doi.org/10.52202/075280-1144",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Pre-training on intracortical signals, where data is scarce but channels are dense."
+    },
+    {
+      "key": "tao2023cwsa",
+      "title": "EEG-Based Emotion Recognition via Channel-Wise Attention and Self Attention",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2020.3025777",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "__intro__"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Channel-wise attention combined with self-attention over time."
+    },
+    {
+      "key": "chao2023rgan",
+      "title": "Multi-Channel EEG Emotion Recognition through Residual Graph Attention Neural Network",
+      "venue": "Frontiers in Neuroscience",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.3389/fnins.2023.1135850",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "Model Architectures and Pre-Training",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A graph network with an adaptive receptive field."
+    },
+    {
+      "key": "zhong2022regularized",
+      "title": "EEG-Based Emotion Recognition Using Regularized Graph Neural Networks",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2020.2994159",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "model"
+      ],
+      "sections": [
+        "__intro__"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Regularisation that keeps a graph model from overfitting the training subjects."
+    },
+    {
+      "key": "song2020dynamical",
+      "title": "EEG Emotion Recognition Using Dynamical Graph Convolutional Neural Networks",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2018.2817622",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "model",
+      "clusters": [
+        "transfer",
+        "model"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "https://github.com/xueyunlong12589/DGCNN",
+      "levels": [],
+      "note": "The dynamic graph convolution most cross-subject work is compared against."
+    },
+    {
+      "key": "imtiaz2026enhanced",
+      "title": "An Enhanced Source-Free Unsupervised Domain Adaptation Framework for Cross-Dataset EEG Emotion Recognition via Predictive Coding and Test-Time Training",
+      "venue": "arXiv preprint arXiv:2606.28202",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2606.28202",
+      "arxiv": "https://arxiv.org/abs/2606.28202",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Domain adaptation with no source data at hand, which is the realistic case."
+    },
+    {
+      "key": "li2026boundary",
+      "title": "Boundary-aware Prototype-driven Adversarial Alignment for Cross-Corpus EEG Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2603.26713",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2603.26713",
+      "arxiv": "https://arxiv.org/abs/2603.26713",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "https://github.com/WuCB-BCI/PAA",
+      "levels": [],
+      "note": "PAA-L: SEED-IV $ $ SEED, Three-class emotion recognition on unified labels"
+    },
+    {
+      "key": "yan2025cross",
+      "title": "Cross-domain EEG-based Emotion Recognition with Contrastive Learning",
+      "venue": "ICASSP 2026: IEEE International Conference on Acoustics, Speech and Signal Processing",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/ICASSP55912.2026.11460520",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 2,
+      "code": "https://github.com/Xeaver/EmotionCLIP",
+      "levels": [],
+      "note": "EEG matched against text, and the small annotated set it needs."
+    },
+    {
+      "key": "jang2025crossmodal",
+      "title": "Cross-Modal Consistency-Guided Active Learning for Affective BCI Systems",
+      "venue": "2026 14th International Conference on Brain-Computer Interface (BCI)",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/BCI69045.2026.11435036",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "closed-loop"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Neuroadaptive Interfaces"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Active learning that chooses which samples to label next."
+    },
+    {
+      "key": "xie2026cross",
+      "title": "Cross-Subject EEG Emotion Recognition Based on Temporal Asynchronous Alignment Contrastive Learning",
+      "venue": "arXiv preprint arXiv:2605.22379",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2605.22379",
+      "arxiv": "https://arxiv.org/abs/2605.22379",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "TA2CL: SEED; FACED, Emotion classification with three, nine, and two classes"
+    },
+    {
+      "key": "qing2026dive",
+      "title": "Dive into Waves: Morlet Spectral Transformer for Cross-Subject Emotion Decoding from EEG",
+      "venue": "arXiv preprint arXiv:2606.00884",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2606.00884",
+      "arxiv": "https://arxiv.org/abs/2606.00884",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "datasets",
+        "model"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets",
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "Transfer"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [],
+      "note": "Same data, pre-trained and task-specific, with the gap between them measured."
+    },
+    {
+      "key": "chen2025emod",
+      "title": "EMOD: A Unified EEG Emotion Representation Framework Leveraging V-A Guided Contrastive Learning",
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1609/aaai.v40i21.38796",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "model"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "Making discrete classes and continuous ratings share one target space."
+    },
+    {
+      "key": "kuang2026graph",
+      "title": "Graph-Regularized Deep Learning for EEG-Based Emotion Recognition with Psychologically-Grounded Label Structure",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.07773",
+      "arxiv": "https://arxiv.org/abs/2607.07773",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Graph regularisation on the electrode adjacency structure."
+    },
+    {
+      "key": "meng2026group",
+      "title": "Group Resonance Network: Learnable Prototypes and Multi-Subject Resonance for EEG Emotion Recognition",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2603.11119",
+      "arxiv": "https://arxiv.org/abs/2603.11119",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Learnable prototypes instead of one model per subject."
+    },
+    {
+      "key": "wang2025hedn",
+      "title": "HEDN: A Hard-Easy Dual Network with Source Reliability Assessment for Cross-Subject EEG Emotion Recognition",
+      "venue": "IEEE Journal of Biomedical and Health Informatics",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/JBHI.2026.3708734",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [],
+      "note": "The clearest example of how much target-side data changes the reported score."
+    },
+    {
+      "key": "zhou2026local",
+      "title": "Local-Global Feature Fusion for Subject-Independent EEG Emotion Recognition",
+      "venue": "Proceedings of the IEEE Engineering in Medicine and Biology Society Annual Conference (EMBC)",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "",
+      "arxiv": "https://arxiv.org/abs/2601.08094",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 2,
+      "code": "https://github.com/Danielz-z/LGF-EEG-Emotion",
+      "levels": [],
+      "note": "Local and global features together, which is what generalisation needs."
+    },
+    {
+      "key": "zhou2026prism",
+      "title": "PRISM: Prioritized Channel Importance with Semi-supervised Domain Adaptation for Cross-Subject EEG Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2607.00358",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2607.00358",
+      "arxiv": "https://arxiv.org/abs/2607.00358",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "A state-space backbone with expert-routed channel gating."
+    },
+    {
+      "key": "liu2026rector",
+      "title": "RECTOR: Masked Region-Channel-Temporal Modeling for Affective and Cognitive Representation Learning",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.15278",
+      "arxiv": "https://arxiv.org/abs/2606.15278",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "model"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "RECTOR: SEED, Three-class valence classification"
+    },
+    {
+      "key": "wu2026region",
+      "title": "Region-aware Spatiotemporal Modeling with Collaborative Domain Generalization for Cross-Subject EEG Emotion Recognition",
+      "venue": "Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "",
+      "arxiv": "https://arxiv.org/abs/2601.15615",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Distribution Shift and Transfer",
+        "Transfer",
+        "__intro__"
+      ],
+      "cite_count": 4,
+      "code": "https://github.com/RyanLi-X/RSM-CoDG",
+      "levels": [],
+      "note": "Collaborative domain alignment over brain regions."
+    },
+    {
+      "key": "liu2025ssas",
+      "title": "SSAS: Cross-subject EEG-based Emotion Recognition through Source Selection with Adversarial Strategy",
+      "venue": "Expert Systems with Applications",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.eswa.2025.130843",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "datasets",
+        "transfer"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets",
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "Source selection across subjects, so the target uses the closest source."
+    },
+    {
+      "key": "hong2025adaptive",
+      "title": "Adaptive Domain Alignment Neural Networks for Cross-Domain EEG Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2024.3480355",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Adaptive alignment, where the amount of alignment is learned."
+    },
+    {
+      "key": "mirzaei2025eeg",
+      "title": "EEG-based Graph-guided Domain Adaptation for Robust Cross-Session Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2512.23526",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2512.23526",
+      "arxiv": "https://arxiv.org/abs/2512.23526",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "EGDA: SEED-IV, Four-class emotion recognition"
+    },
+    {
+      "key": "qiu2025elpg",
+      "title": "ELPG-DTFS: Prior-Guided Adaptive Time-Frequency Graph Neural Network for EEG Depression Diagnosis",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2509.24860",
+      "arxiv": "https://arxiv.org/abs/2509.24860",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "ELPG-DTFS: MODMA, Depression versus healthy control classification"
+    },
+    {
+      "key": "li2025freqdgt",
+      "title": "FreqDGT: Frequency-Adaptive Dynamic Graph Networks with Transformer for Cross-subject EEG Emotion Recognition",
+      "venue": "2025 International Conference on Machine Intelligence and Nature-Inspired Computing (MIND)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/MIND67540.2025.11351599",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Frequency-adaptive graph construction."
+    },
+    {
+      "key": "ye2025interpretable",
+      "title": "Hierarchical Dynamic Graph Convolutional Network With Interpretability for EEG-Based Emotion Recognition",
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TNNLS.2022.3225855",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "evaluation",
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Evaluation Settings and Leakage"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "HD-GCN: DREAMER, High/low valence and arousal classification"
+    },
+    {
+      "key": "zhang2025multidataset",
+      "title": "Multi-dataset Joint Pre-training of Emotional EEG Enables Generalizable Affective Computing",
+      "venue": "Advances in Neural Information Processing Systems 38 (NeurIPS 2025)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.52202/085713-5515",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "model"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Model Architectures and Pre-Training",
+        "Transfer",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [],
+      "note": "Mixed label spaces across five corpora, the hardest cross-dataset setting."
+    },
+    {
+      "key": "chang2025hyperbolic",
+      "title": "Multi-Scale Hyperbolic Contrastive Learning for Cross-Subject EEG Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2025.3535542",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "datasets"
+      ],
+      "sections": [
+        "Decoding Targets and Datasets",
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 3,
+      "code": "https://github.com/JiangChang-BRAIN/MSHCL",
+      "levels": [],
+      "note": "MSHCL: MPED, Seven-class emotion recognition"
+    },
+    {
+      "key": "tang2025sda",
+      "title": "SDA-DDA Semi-supervised Domain Adaptation with Dynamic Distribution Alignment Network For Emotion Recognition Using EEG Signals",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2502.16485",
+      "arxiv": "https://arxiv.org/abs/2502.16485",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Transfer"
+      ],
+      "cite_count": 2,
+      "code": "https://github.com/XuanSuTrum/SDA-DDA",
+      "levels": [],
+      "note": "Semi-supervised domain adaptation with a changing distribution."
+    },
+    {
+      "key": "gong2025tahag",
+      "title": "TAHAG: Two-Stage Domain Adaptation With Hybrid Adaptive Graph Learning for EEG Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2025.3580787",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Two-stage alignment with a hybrid graph structure."
+    },
+    {
+      "key": "gu2023dggn",
+      "title": "A Domain Generative Graph Network for EEG-Based Emotion Recognition",
+      "venue": "IEEE Journal of Biomedical and Health Informatics",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/JBHI.2023.3242090",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "A generative step that produces target-like data for alignment."
+    },
+    {
+      "key": "shen2023contrastive",
+      "title": "Contrastive Learning of Subject-Invariant EEG Representations for Cross-Subject Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2022.3164516",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Contrastive training that removes subject-specific variation."
+    },
+    {
+      "key": "jaiswal2023subject",
+      "title": "Towards Subject Agnostic Affective Emotion Recognition",
+      "venue": "Proceedings of the 2nd International Workshop on Multimodal Human Understanding for the Web and Social Media (MUWS 2023), co-located with the 32nd ACM International Conference on Information and Knowledge Management",
+      "year": "2023",
+      "type": "inproceedings",
+      "doi": "",
+      "arxiv": "",
+      "url": "https://ceur-ws.org/Vol-3566/paper4.pdf",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer",
+        "closed-loop"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Subject-agnostic representations across several affect corpora."
+    },
+    {
+      "key": "zhang2022parse",
+      "title": "PARSE: Pairwise Alignment of Representations in Semi-Supervised EEG Learning for Emotion Recognition",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2022.3210441",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Semi-supervised alignment with a small labelled target set."
+    },
+    {
+      "key": "wu2022transfer",
+      "title": "Transfer learning for EEG-based brain-computer interfaces: A review of progress made since 2016",
+      "venue": "IEEE Transactions on Cognitive and Developmental Systems",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TCDS.2020.3007453",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A review of transfer learning for EEG-based BCIs."
+    },
+    {
+      "key": "wang2021prototype",
+      "title": "A Prototype-Based SPD Matrix Network for Domain Adaptation EEG Emotion Recognition",
+      "venue": "Pattern Recognition",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.patcog.2020.107626",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Prototypes in the SPD manifold, where covariance is the natural representation."
+    },
+    {
+      "key": "wan2021transfer",
+      "title": "A Review on Transfer Learning in EEG Signal Analysis",
+      "venue": "Neurocomputing",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neucom.2020.09.017",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A review of transfer learning in EEG analysis."
+    },
+    {
+      "key": "he2020euclidean",
+      "title": "Transfer learning for brain-computer interfaces: A Euclidean space data alignment approach",
+      "venue": "IEEE Transactions on Biomedical Engineering",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TBME.2019.2913914",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "transfer",
+      "clusters": [
+        "transfer"
+      ],
+      "sections": [
+        "Distribution Shift and Transfer"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Transfer that works in the SPD space of covariance matrices."
+    },
+    {
+      "key": "bindra2026spectral",
+      "title": "A spectral audit framework reveals task-dependent aperiodic reliance across EEG and ECG deep learning",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.08583",
+      "arxiv": "https://arxiv.org/abs/2606.08583",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Evaluation Settings and Leakage"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Six of seven foundation models depend on the aperiodic background component."
+    },
+    {
+      "key": "kim2026closed",
+      "title": "Closed-Loop Brain-Computer Interfaces (BCI) Enhanced With AI-Driven Neurofeedback Using Soft Bioelectronic Networks: A Comparative Study With IBRAINTECH and Proposal of a New Hybrid Model",
+      "venue": "International Journal of Grid Computing & Applications",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.5121/ijgca.2026.17101",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Soft bioelectronic interfaces for closed-loop neurofeedback."
+    },
+    {
+      "key": "suo2026evaluation",
+      "title": "Cross-Subject Generalization in EEG Emotion Recognition",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.27655",
+      "arxiv": "https://arxiv.org/abs/2607.27655",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation",
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Evaluation Settings and Leakage"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A controlled audit showing how much a favourable split can inflate accuracy."
+    },
+    {
+      "key": "pham2026cross",
+      "title": "Cross-Subject Intracranial EEG Reconstruction from Scalp Recordings Using Multi-Scale Cross-Attention Transformers",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2605.18897",
+      "arxiv": "https://arxiv.org/abs/2605.18897",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Reconstructing intracranial activity from scalp recordings."
+    },
+    {
+      "key": "zhou2026brain",
+      "title": "Learning from Brain Topography: A Hierarchical Local-Global Graph-Transformer Network for EEG Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2601.10525",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2601.10525",
+      "arxiv": "https://arxiv.org/abs/2601.10525",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Topography as the structure the model builds on."
+    },
+    {
+      "key": "li2026sa",
+      "title": "SA-HGNN: Sample-Adaptive Hyperbolic Graph Neural Network for EEG-Based Depression Recognition",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.02063",
+      "arxiv": "https://arxiv.org/abs/2607.02063",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Hyperbolic geometry for depression recognition."
+    },
+    {
+      "key": "hu2026see",
+      "title": "See the Emotion: A Facial Emoji Proxy Modeling for EEG Emotion Recognition",
+      "venue": "Proceedings of the 43rd International Conference on Machine Learning (ICML)",
+      "year": "2026",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.48550/arXiv.2607.02912",
+      "arxiv": "https://arxiv.org/abs/2607.02912",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Evaluation Settings and Leakage"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/xian-sh/SeeEmotion",
+      "levels": [],
+      "note": "Facial expression used as a proxy label for EEG emotion."
+    },
+    {
+      "key": "jiang2025interpretable",
+      "title": "Interpretable Dual-Filter Fuzzy Neural Networks for Affective Brain-Computer Interfaces",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2502.17445",
+      "arxiv": "https://arxiv.org/abs/2502.17445",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Evaluation Settings and Leakage"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "A fuzzy model whose filters are readable by a person."
+    },
+    {
+      "key": "zhang2022visual2eeg",
+      "title": "Visual-to-EEG Cross-Modal Knowledge Distillation for Continuous Emotion Recognition",
+      "venue": "Pattern Recognition",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.patcog.2022.108833",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Knowledge distilled from visual stimuli into EEG representations."
+    },
+    {
+      "key": "rudin2019explain",
+      "title": "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead",
+      "venue": "Nature Machine Intelligence",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s42256-019-0048-x",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Evaluation Settings and Leakage",
+        "Target validity"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "The case for perturbing inputs instead of reading saliency maps."
+    },
+    {
+      "key": "woo2017buildingbiomarkers",
+      "title": "Building Better Biomarkers: Brain Models in Translational Neuroimaging",
+      "venue": "Nature Neuroscience",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nn.4478",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "closed-loop",
+        "evaluation",
+        "governance"
+      ],
+      "sections": [
+        "Governance",
+        "Target validity",
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "Defines a biomarker backwards from its intended use, the basis of the governance rules."
+    },
+    {
+      "key": "drysdale2017depressionsubtypes",
+      "title": "Resting-state connectivity biomarkers define neurophysiological subtypes of depression",
+      "venue": "Nature Medicine",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nm.4246",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "evaluation",
+      "clusters": [
+        "evaluation"
+      ],
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Resting-state subtypes of depression, and their response to treatment."
+    },
+    {
+      "key": "xie2026harnesssurvey",
+      "title": "A Survey on AI Agent Harness",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.13140/RG.2.2.31393.57447",
+      "arxiv": "",
+      "url": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "__agent_intro__"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
+      "levels": [],
+      "note": "The agent harness literature the governance layer is built on."
+    },
+    {
+      "key": "zhou2026brainagent",
+      "title": "BrainAgent: A Large Language Model-Driven Multi-Agent Framework for Autonomous Brain Signal Understanding",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.25400",
+      "arxiv": "https://arxiv.org/abs/2606.25400",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "An LLM-driven multi-agent framework over EEG."
+    },
+    {
+      "key": "xiong2025affective",
+      "title": "Affective Brain Computer InterfaceUsing closed-loop BCI to recognize emotions and solve emotion problems",
+      "venue": "Transactions on Computer Science and Intelligent Systems Research",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.62051/39m2yk04",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "__applications_intro__",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "A closed-loop BCI that recognises affect and responds in kind."
+    },
+    {
+      "key": "duraisamy2025adaptive",
+      "title": "An Adaptive Brain-Computer Interface Game with Blink Controls and Cognitive State Monitoring",
+      "venue": "Companion Proceedings of the 30th International Conference on Intelligent User Interfaces",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3708557.3716365",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "How Action Changes Later Data",
+        "Neuroadaptive Interfaces"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "An adaptive game where the interface follows the user's state."
+    },
+    {
+      "key": "herbuela2025realtime",
+      "title": "Realtime Multimodal Emotion Estimation using Behavioral and Neurophysiological Data",
+      "venue": "Proceedings of the 27th International Conference on Multimodal Interaction (ICMI)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3716553.3757092",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Neuroadaptive Interfaces",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Real-time multimodal estimation, behaviour alongside the signal."
+    },
+    {
+      "key": "willett2023speech",
+      "title": "A High-Performance Speech Neuroprosthesis",
+      "venue": "Nature",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41586-023-06377-x",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Who Controls the Action"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "62 words per minute from a speech neuroprosthesis."
+    },
+    {
+      "key": "moses2021neuroprosthesis",
+      "title": "Neuroprosthesis for Decoding Speech in a Paralyzed Person with Anarthria",
+      "venue": "New England Journal of Medicine",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1056/NEJMoa2027540",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Who Controls the Action"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Speech decoded in a person who cannot speak."
+    },
+    {
+      "key": "zotev2020simultaneous",
+      "title": "Effects of simultaneous real-time fMRI and EEG neurofeedback in major depressive disorder evaluated with brain electromagnetic tomography",
+      "venue": "NeuroImage: Clinical",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.nicl.2020.102459",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Neurofeedback and Self-Regulation",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Simultaneous fMRI and EEG neurofeedback, and what each adds."
+    },
+    {
+      "key": "zich2020modulatory",
+      "title": "Modulatory effects of dynamic fMRI-based neurofeedback on emotion regulation networks in adolescent females",
+      "venue": "NeuroImage",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neuroimage.2020.117053",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop"
+      ],
+      "sections": [
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Modulatory connectivity as a control signal for emotion regulation."
+    },
+    {
+      "key": "shanechi2019brain",
+      "title": "Brain–machine interfaces from motor to mood",
+      "venue": "Nature Neuroscience",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41593-019-0488-y",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop",
+        "deployment"
+      ],
+      "sections": [
+        "Responsive Neuromodulation",
+        "Who Controls the Action"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "From motor control to mood: what brain-machine interfaces could reach."
+    },
+    {
+      "key": "sitaram2017neurofeedback",
+      "title": "Closed-Loop Brain Training: The Science of Neurofeedback",
+      "venue": "Nature Reviews Neuroscience",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nrn.2016.164",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop",
+        "maturity"
+      ],
+      "sections": [
+        "Demonstrated benefit",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Why contingency decides whether a neurofeedback result means anything."
+    },
+    {
+      "key": "debettencourt2015",
+      "title": "Closed-Loop Training of Attention with Real-Time Brain Imaging",
+      "venue": "Nature Neuroscience",
+      "year": "2015",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nn.3940",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "closed-loop",
+      "clusters": [
+        "closed-loop",
+        "maturity"
+      ],
+      "sections": [
+        "Demonstrated benefit",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Yoked and no-feedback conditions, the controls that separate signal from response."
+    },
+    {
+      "key": "zhou2026eegdancer",
+      "title": "EEGDancer: Dynamic Emotion Latent Space Masked Modeling with Reinforcement Learning for EEG Continuous Emotion Prediction",
+      "venue": "arXiv preprint arXiv:2606.05855",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2606.05855",
+      "arxiv": "https://arxiv.org/abs/2606.05855",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Dynamic emotion latent space with masked modelling."
+    },
+    {
+      "key": "djibrina2026energy",
+      "title": "Energy Landscapes of Emotion: Quantifying Brain Network Stability During Happy and Sad Face Processing Using EEG-Based Hopfield Energy",
+      "venue": "arXiv preprint arXiv:2603.27644",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2603.27644",
+      "arxiv": "https://arxiv.org/abs/2603.27644",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Emotion as the stability of a network, rather than a label."
+    },
+    {
+      "key": "he2026i",
+      "title": "I 2RiMA: Spectral Riemannian Representation with Temporal Attention for Mental Stress Detection based on EEG Signals",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.01279",
+      "arxiv": "https://arxiv.org/abs/2607.01279",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Spectral Riemannian representations with temporal attention."
+    },
+    {
+      "key": "kabotyanski2026intracranial",
+      "title": "Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review",
+      "venue": "Biological Psychiatry",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.biopsych.2025.10.005",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "transfer",
+        "closed-loop",
+        "deployment",
+        "evaluation"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Distribution Shift and Transfer",
+        "How Action Changes Later Data",
+        "Real-time operation",
+        "Target validity",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [],
+      "note": "Which intracranial biomarkers could actually guide stimulation."
+    },
+    {
+      "key": "pan2026arousal",
+      "title": "Toward Annotation-Efficient Continuous Emotion Arousal Quantification via Group-Level EEG Dynamic Neural Synchrony",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.28204",
+      "arxiv": "https://arxiv.org/abs/2607.28204",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Annotation-efficient continuous arousal estimation."
+    },
+    {
+      "key": "nassibi2025systematic",
+      "title": "A Systematic Review of EEG-based Machine Intelligence Algorithms for Depression Diagnosis, and Monitoring",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2503.19820",
+      "arxiv": "https://arxiv.org/abs/2503.19820",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A map of the diagnostic EEG literature for affective states."
+    },
+    {
+      "key": "hazra2025bridging",
+      "title": "Bridging Accuracy and Explainability in EEG-based Graph Attention Network for Depression Detection",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2511.05537",
+      "arxiv": "https://arxiv.org/abs/2511.05537",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Accuracy and explainability held together rather than traded off."
+    },
+    {
+      "key": "kwok2025fairness",
+      "title": "Machine Learning Fairness for Depression Detection using EEG Data",
+      "venue": "2025 IEEE 22nd International Symposium on Biomedical Imaging (ISBI)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/ISBI60581.2025.10980986",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment",
+        "governance"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Governance"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A fairness audit across EEG depression datasets, and the subgroup gap it finds."
+    },
+    {
+      "key": "yik2025neurobench",
+      "title": "The NeuroBench Framework for Benchmarking Neuromorphic Computing Algorithms and Systems",
+      "venue": "Nature Communications",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41467-025-56739-4",
+      "arxiv": "",
+      "url": "https://doi.org/10.1038/s41467-025-56739-4",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/lava-nc/lava",
+      "levels": [],
+      "note": "A benchmark framework for neuromorphic computing."
+    },
+    {
+      "key": "oganesian2024brain",
+      "title": "Brain–computer interfaces for neuropsychiatric disorders",
+      "venue": "Nature Reviews Bioengineering",
+      "year": "2024",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s44222-024-00177-2",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment",
+        "maturity"
+      ],
+      "sections": [
+        "Demonstrated benefit",
+        "Responsive Neuromodulation",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "A review of BCIs for neuropsychiatric disorders."
+    },
+    {
+      "key": "rao2018direct",
+      "title": "Direct Electrical Stimulation of Lateral Orbitofrontal Cortex Acutely Improves Mood in Individuals with Symptoms of Depression",
+      "venue": "Current Biology",
+      "year": "2018",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.cub.2018.10.026",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Open-loop stimulation, which can identify a target but not test biomarker timing."
+    },
+    {
+      "key": "lozano2013",
+      "title": "Probing and Regulating Dysfunctional Circuits Using Deep Brain Stimulation",
+      "venue": "Neuron",
+      "year": "2013",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neuron.2013.01.020",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "deployment",
+      "clusters": [
+        "deployment"
+      ],
+      "sections": [
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Deep brain stimulation guided by a functional circuit model."
+    },
+    {
+      "key": "monroydcroz2026minimalist",
+      "title": "A Minimalist Brain-Computer Musical Interface for Real-Time Emotion-Driven Sonification: System Design and Preliminary Evaluation",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.01473",
+      "arxiv": "https://arxiv.org/abs/2606.01473",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop"
+      ],
+      "sections": [
+        "Act: Controlling What Reaches the User",
+        "How Action Changes Later Data",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "A musical BCI where the control signal showed no effect on the target emotion."
+    },
+    {
+      "key": "yang2026crosstask",
+      "title": "Cross-task, explainable and real-time decoding of human emotion states by integrating gray and white matter intracranial neural activity",
+      "venue": "Nature Computational Science",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s43588-026-01021-w",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "datasets",
+        "model",
+        "deployment"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Lab: testing the estimate",
+        "Model Architectures and Pre-Training",
+        "__intro__"
+      ],
+      "cite_count": 7,
+      "code": "",
+      "levels": [
+        "Lab"
+      ],
+      "note": "Personalised intracranial prediction during a live task, with online participants."
+    },
+    {
+      "key": "zhang2026mindmelody",
+      "title": "MindMelody: A Closed-Loop EEG-Driven System for Personalized Music Intervention",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2605.01235",
+      "arxiv": "https://arxiv.org/abs/2605.01235",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop"
+      ],
+      "sections": [
+        "Act: Controlling What Reaches the User",
+        "Neuroadaptive Interfaces",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "__intro__"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "EEG-driven music generation, and a report without significance tests."
+    },
+    {
+      "key": "li2026mindpilot",
+      "title": "MindPilot: Closed-loop Visual Stimulation Optimization for Brain Modulation with EEG-guided Diffusion",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2602.10552",
+      "arxiv": "https://arxiv.org/abs/2602.10552",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop"
+      ],
+      "sections": [
+        "Act: Controlling What Reaches the User",
+        "Neuroadaptive Interfaces",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction"
+      ],
+      "cite_count": 4,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "EEG-guided image generation, with a second experiment that removes the neural input."
+    },
+    {
+      "key": "kosmyna2026neuroskill",
+      "title": "NeuroSkill(tm): Proactive Real-Time Agentic System Capable of Modeling Human State of Mind",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "",
+      "arxiv": "https://arxiv.org/abs/2603.03212",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop",
+        "governance"
+      ],
+      "sections": [
+        "Governance",
+        "Neuroadaptive Interfaces",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction"
+      ],
+      "cite_count": 4,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "An agentic system that invokes tools, with no user-level outcome reported."
+    },
+    {
+      "key": "wen2025adaptivecopilot",
+      "title": "AdaptiveCoPilot: Design and Testing of a NeuroAdaptive LLM Cockpit Guidance System in both Novice and Expert Pilots",
+      "venue": "2025 IEEE Conference Virtual Reality and 3D User Interfaces (VR)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/VR59515.2025.00088",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop",
+        "datasets"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Neuroadaptive Interfaces",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "__intro__"
+      ],
+      "cite_count": 7,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "Workload-adaptive guidance, where adaptation produced more errors than the baseline."
+    },
+    {
+      "key": "baradari2025neurochat",
+      "title": "NeuroChat: A Neuroadaptive AI Chatbot for Customizing Learning Experiences",
+      "venue": "Proceedings of the 7th ACM Conference on Conversational User Interfaces",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3719160.3736623",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop"
+      ],
+      "sections": [
+        "Neuroadaptive Interfaces",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "__intro__"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "Engagement-adaptive dialogue, where adaptation changed the measure but not learning."
+    },
+    {
+      "key": "gill2023pilot",
+      "title": "A pilot study of closed-loop neuromodulation for treatment-resistant post-traumatic stress disorder",
+      "venue": "Nature Communications",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41467-023-38712-1",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop",
+        "deployment"
+      ],
+      "sections": [
+        "Act: Controlling What Reaches the User",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 4,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "Amygdala-triggered stimulation, with a control group still missing."
+    },
+    {
+      "key": "alagapan2023cingulate",
+      "title": "Cingulate dynamics track depression recovery with deep brain stimulation",
+      "venue": "Nature",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41586-023-06541-3",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "datasets",
+        "deployment",
+        "evaluation"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Lab: testing the estimate",
+        "Target validity",
+        "__intro__"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [
+        "Lab"
+      ],
+      "note": "A marker that follows recovery without ever triggering stimulation."
+    },
+    {
+      "key": "xiao2023decoding",
+      "title": "Decoding Depression Severity From Intracranial Neural Activity",
+      "venue": "Biological Psychiatry",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.biopsych.2023.01.020",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "datasets",
+        "deployment",
+        "evaluation"
+      ],
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Lab: testing the estimate",
+        "Target validity"
+      ],
+      "cite_count": 4,
+      "code": "",
+      "levels": [
+        "Lab"
+      ],
+      "note": "Prefrontal intracranial coverage for depression severity."
+    },
+    {
+      "key": "dehghani2022neural",
+      "title": "Neural modulation enhancement using connectivity-based EEG neurofeedback with simultaneous fMRI for emotion regulation",
+      "venue": "NeuroImage",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neuroimage.2023.120320",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop",
+        "datasets",
+        "evaluation"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "Target validity",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "Connectivity neurofeedback: Emotion regulation, EEG with concurrent fMRI"
+    },
+    {
+      "key": "huang2023neurofeedback",
+      "title": "Neurofeedback Training With an Electroencephalogram-Based Brain-Computer Interface Enhances Emotion Regulation",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2021.3134183",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "closed-loop"
+      ],
+      "sections": [
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "Learning across ten sessions, which does not show transfer beyond the loop."
+    },
+    {
+      "key": "bijanzadeh2022decoding",
+      "title": "Decoding naturalistic affective behaviour from spectro-spatial features in multiday human iEEG",
+      "venue": "Nature Human Behaviour",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41562-022-01310-0",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "datasets",
+        "evaluation",
+        "transfer",
+        "deployment"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Distribution Shift and Transfer",
+        "Evaluation Settings and Leakage",
+        "Lab: testing the estimate"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [
+        "Lab"
+      ],
+      "note": "116 hours over 11 participants, and a gap between per-person and group accuracy."
+    },
+    {
+      "key": "scangos2021closedloop",
+      "title": "Closed-loop neuromodulation in an individual with treatment-resistant depression",
+      "venue": "Nature Medicine",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41591-021-01480-w",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "model",
+        "closed-loop",
+        "deployment"
+      ],
+      "sections": [
+        "Act: Controlling What Reaches the User",
+        "Model Architectures and Pre-Training",
+        "Neurofeedback and Self-Regulation",
+        "Pilot: testing the interaction",
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 5,
+      "code": "",
+      "levels": [
+        "Pilot"
+      ],
+      "note": "A personalised biomarker that did trigger stimulation, and reached remission."
+    },
+    {
+      "key": "sani2018mood",
+      "title": "Mood variations decoded from multi-site intracranial human brain activity",
+      "venue": "Nature Biotechnology",
+      "year": "2018",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nbt.4200",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity",
+        "datasets",
+        "deployment"
+      ],
+      "sections": [
+        "Acquisition Modalities",
+        "Affect Monitoring and Assessment",
+        "Decoding Targets and Datasets",
+        "Lab: testing the estimate",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [
+        "Lab"
+      ],
+      "note": "Multiday intracranial mood tracking, the basis for the Lab level."
+    },
+    {
+      "key": "chaudhary2016bci",
+      "title": "Brain-computer interfaces for communication and rehabilitation",
+      "venue": "Nature Reviews Neurology",
+      "year": "2016",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nrneurol.2016.113",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "maturity",
+      "clusters": [
+        "maturity"
+      ],
+      "sections": [
+        "__applications_intro__",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "The clinical landscape of BCIs for communication and rehabilitation."
+    },
+    {
+      "key": "li2025neuraldiffuser",
+      "title": "NeuralDiffuser: Neuroscience-Inspired Diffusion Guidance for fMRI Visual Reconstruction",
+      "venue": "IEEE Transactions on Image Processing",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TIP.2025.3526051",
+      "arxiv": "",
+      "url": "https://doi.org/10.1109/TIP.2025.3526051",
+      "primary_cluster": "governance",
+      "clusters": [
+        "governance"
+      ],
+      "sections": [
+        "Governance"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Reconstructing viewed images from archived fMRI."
+    },
+    {
+      "key": "steinert2020wiredemotions",
+      "title": "Wired Emotions: Ethical Issues of Affective Brain-Computer Interfaces",
+      "venue": "Science and Engineering Ethics",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1007/s11948-019-00087-2",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "governance",
+      "clusters": [
+        "governance"
+      ],
+      "sections": [
+        "Governance"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "What a neural recording reveals beyond the purpose it was collected for."
+    },
+    {
+      "key": "yuste2017fourpriorities",
+      "title": "Four ethical priorities for neurotechnologies and AI",
+      "venue": "Nature",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/551159a",
+      "arxiv": "",
+      "url": "",
+      "primary_cluster": "governance",
+      "clusters": [
+        "governance"
+      ],
+      "sections": [
+        "Governance"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Four priorities for neurotechnology, including data sharing."
+    }
+  ]
+}

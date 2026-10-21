@@ -1,0 +1,57 @@
+name: Add a dataset
+description: Suggest a corpus that is missing from the corpora table
+labels: ["dataset"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Dataset name
+      placeholder: SEED-VII
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: How is the target obtained?
+      options:
+        - Stimulus-elicited
+        - Self-reported
+        - Expression-observed
+    validations:
+      required: true
+  - type: input
+    id: scale
+    attributes:
+      label: Scale
+      placeholder: 20 participants; 62 channels; 4 sessions
+    validations:
+      required: true
+  - type: input
+    id: modality
+    attributes:
+      label: Modality
+      placeholder: Scalp EEG plus eye tracking
+    validations:
+      required: true
+  - type: input
+    id: target_desc
+    attributes:
+      label: Target
+      placeholder: Six basic emotions plus neutral with continuous intensity ratings
+    validations:
+      required: true
+  - type: textarea
+    id: obtained
+    attributes:
+      label: How the target is obtained
+      description: The protocol that produces the label.
+      placeholder: Post-session self-rating of intensity on 1-10 scales
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Paper or download link
+      placeholder: https://doi.org/10.1109/...
+    validations:
+      required: true

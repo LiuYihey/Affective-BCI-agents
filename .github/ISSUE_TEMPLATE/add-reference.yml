@@ -1,0 +1,51 @@
+name: Add a reference
+description: Suggest a paper that is missing from the resource index
+labels: ["reference"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: The title of the paper
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: DOI or arXiv link
+      placeholder: https://doi.org/10.1109/...
+    validations:
+      required: true
+  - type: dropdown
+    id: question
+    attributes:
+      label: Which question does this paper answer?
+      options:
+        - Which corpus should I use?
+        - How do I turn a recording into a prediction?
+        - Will it work on a person I have never seen?
+        - Is that accuracy real?
+        - How do I wire a decoder into a loop that stays safe?
+        - Can I run this in real time?
+        - How strong is the evidence?
+        - Where is the boundary?
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: Why is it worth opening?
+      description: One sentence on what the paper settles, or where it falls short.
+      placeholder: Shows how much a favourable split can inflate accuracy.
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: Code repository (optional)
+      placeholder: https://github.com/...
+  - type: input
+    id: year
+    attributes:
+      label: Year (optional)
+      placeholder: "2026"

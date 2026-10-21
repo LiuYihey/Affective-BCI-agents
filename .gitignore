@@ -1,0 +1,23 @@
+# The survey manuscript and its build artefacts stay out of the repository.
+paper/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

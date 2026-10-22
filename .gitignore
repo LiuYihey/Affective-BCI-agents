@@ -21,3 +21,8 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local preview of the README
+_preview.html
+_shot*.png
+_chrome_tmp/

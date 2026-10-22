@@ -1,14 +1,18 @@
-# How do I turn a multichannel recording into a prediction?
+# Decoding Architectures
 
-Architectures for organising a recording before prediction, and the training objectives that decide which variations the model keeps.
+> **Methods tier** — How a recording becomes a prediction.
 
-**28 references** list here; 22 are filed primarily under this question.
+How a recording is organised, and which objective decides what the model keeps.
+
+A multichannel recording can be arranged as a grid, a graph, or a sequence, and the arrangement decides what the model is able to see. The training objective is the more consequential choice: it determines whether the representation is tied to a task, a subject, or a device.
+
+**28 references** are listed here; 22 of them are filed primarily under this area.
 
 ## What to look for
 
-- CNN / GNN / Transformer / SSM
+- Architectures: CNN, GNN, Transformer, SSM
 - Self-supervised pre-training
-- Cross-dataset pre-training
+- Cross-dataset and cross-signal pre-training
 - Device-agnostic representations
 
 ## References
@@ -43,3 +47,9 @@ Architectures for organising a recording before prediction, and the training obj
 | [Multi-dataset Joint Pre-training of Emotional EEG Enables Generalizable Affective Computing](https://doi.org/10.52202/085713-5515) | 2025 | Advances in Neural Information Processing Systems 38 (NeurIPS 2025) | Mixed label spaces across five corpora, the hardest cross-dataset setting. | [DOI](https://doi.org/10.52202/085713-5515) |
 | [Cross-task, explainable and real-time decoding of human emotion states by integrating gray and white matter intracranial neural activity](https://doi.org/10.1038/s43588-026-01021-w) | 2026 | Nature Computational Science | Personalised intracranial prediction during a live task, with online participants. | [DOI](https://doi.org/10.1038/s43588-026-01021-w) |
 | [Closed-loop neuromodulation in an individual with treatment-resistant depression](https://doi.org/10.1038/s41591-021-01480-w) | 2021 | Nature Medicine | A personalised biomarker that did trigger stimulation, and reached remission. | [DOI](https://doi.org/10.1038/s41591-021-01480-w) |
+
+---
+
+**Also in the Methods tier:** [Generalization & Transfer](generalization.md).
+
+All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

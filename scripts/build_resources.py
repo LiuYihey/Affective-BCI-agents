@@ -1,7 +1,7 @@
 """Build the resource index for Affective BCI Agents.
 
 Reads the survey's LaTeX source and bibliography, works out which research
-question each reference answers, and emits a machine-readable index plus
+area each reference belongs to, and emits a machine-readable index plus
 Markdown pages that list every reference with a clickable link.
 
 Local input (never committed):
@@ -11,11 +11,11 @@ Local input (never committed):
 Committed output:
     resources/papers.json
     resources/papers.md
-    resources/by-question/*.md
+    resources/by-area/*.md
 
-The index is organised by the question a practitioner is trying to answer,
-not by the order of the survey's sections. A reference is filed under every
-question it informs; the question it informs most often is its primary home.
+The index is organised by research area, not by the order of the survey's
+sections. A reference is filed under every area it informs; the area it
+informs most often is its primary home.
 
 Usage:
     python scripts/build_resources.py
@@ -33,78 +33,157 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # --------------------------------------------------------------------------
-# 1. Clusters: the questions a practitioner asks
+# 1. Research areas
 # --------------------------------------------------------------------------
 
-CLUSTERS = OrderedDict([
-    ("datasets", (
-        "Which corpus should I use?",
-        "Where the signal comes from, how the label was produced, and how many "
-        "people it covers. Labels assigned by the experimenter, reported by the "
-        "participant, or read from behaviour are not interchangeable.",
-        ["Signal source and quality", "Target definition", "Corpus size", "Annotation cost"])),
-    ("model", (
-        "How do I turn a multichannel recording into a prediction?",
-        "Architectures for organising a recording before prediction, and the "
-        "training objectives that decide which variations the model keeps.",
-        ["CNN / GNN / Transformer / SSM", "Self-supervised pre-training",
-         "Cross-dataset pre-training", "Device-agnostic representations"])),
-    ("transfer", (
-        "Will it still work on a person I have never seen?",
+# The index is organised by research area. The areas are named after the
+# topics the literature is actually about, not after questions a reader might
+# ask, so that the same words carry the same meaning in the index, in the
+# survey, and in a talk about the field.
+#
+# Each entry is (title, scope, aspects, tier, settles).
+#
+# "settles" is the one-line statement of what the area answers. It is short
+# enough to sit in a table column, and it is the same sentence in the README,
+# in the area index, and on the area's own page.
+AREAS = OrderedDict([
+    ("signal", (
+        "Signal Acquisition & Quality",
+        "The acquisition method sets the first limit on interpretation: scalp "
+        "EEG is wearable and inexpensive but mixes neural activity with eye and "
+        "muscle sources, while intracranial coverage differs from patient to "
+        "patient and prevents direct transfer to scalp recordings.",
+        ["Modalities and what they capture", "Signal quality and artefact handling",
+         "Spatial coverage and channel count", "Few-channel and wearable recording"],
+        "Foundations",
+        "What the recording measures, and how much of it can be trusted")),
+    ("corpora", (
+        "Affective Targets & Corpora",
+        "Emotion cannot be observed directly, so every study uses a measurable "
+        "proxy as its target. A stimulus-elicited target is assigned by the "
+        "experimenter, a self-reported target comes from the participant, and "
+        "an expression-observed target is read from behaviour. The three are "
+        "related but not interchangeable, and a model trained on one can "
+        "succeed by recognising the clip rather than the state.",
+        ["Target validity and time scale", "Annotation protocols",
+         "Corpus size and subject coverage", "Cross-corpus comparability"],
+        "Foundations",
+        "Why a measurable proxy stands in for emotion, and what it then means")),
+    ("architectures", (
+        "Decoding Architectures",
+        "A multichannel recording can be arranged as a grid, a graph, or a "
+        "sequence, and the arrangement decides what the model is able to see. "
+        "The training objective is the more consequential choice: it "
+        "determines whether the representation is tied to a task, a subject, "
+        "or a device.",
+        ["Architectures: CNN, GNN, Transformer, SSM",
+         "Self-supervised pre-training", "Cross-dataset and cross-signal pre-training",
+         "Device-agnostic representations"],
+        "Methods",
+        "How a recording is organised, and which objective decides what the "
+        "model keeps")),
+    ("generalization", (
+        "Generalization & Transfer",
         "Recordings change across people, across sessions, and across devices. "
-        "The unit held out during testing states how far a result can travel.",
-        ["Within-subject to cross-dataset", "Domain generalisation",
-         "Unsupervised adaptation", "Personalisation"])),
+        "The amount of target-side data available for adaptation is part of "
+        "the method rather than a detail of the protocol, and a method that "
+        "needs a labelled target is a method that has to be re-run for every "
+        "new user.",
+        ["Within-subject to cross-dataset", "Domain generalization",
+         "Unsupervised and source-free adaptation", "Personalization"],
+        "Methods",
+        "The unit held out during testing states how far a result can travel")),
     ("evaluation", (
-        "Is that accuracy real?",
-        "The test split decides which question an accuracy answers. A favourable "
-        "split or repeated access to the test set can beat a better architecture.",
-        ["Split protocols", "Leakage", "Spectral confounds",
-         "Model explanation checks"])),
+        "Evaluation & Leakage Control",
+        "The test split decides which question an accuracy answers. A "
+        "favourable split or repeated access to the test set can beat a better "
+        "architecture, and a model can reach a high score by reading a spectral "
+        "confound rather than the variable of interest.",
+        ["Split protocols and split unit", "Leakage from windows and sessions",
+         "Aperiodic and spectral confounds", "Perturbation-based explanation checks"],
+        "Validation",
+        "A favourable split or repeated test-set access can beat a better "
+        "architecture")),
+    ("maturity", (
+        "Evidence Maturity",
+        "A result supports a claim only at the level whose evidence it "
+        "actually provides, and the evidence for a level has to be gathered at "
+        "that level. Missing controls and undefined outcome measures are what "
+        "separate one level from the next.",
+        ["Lab, Pilot and Field", "Missing controls and contingencies",
+         "Outcome measures and user benefit", "Reproducibility of the pipeline"],
+        "Validation",
+        "Lab estimates the state; Pilot changes something; Field holds up over "
+        "time")),
     ("closed-loop", (
-        "How do I wire a decoder into a loop that stays safe?",
+        "Closed-Loop Systems",
         "Sense turns the signal into a belief, Think proposes an action, Act "
         "decides what may reach the user. A harness keeps an adaptive system "
-        "inside the range that was tested.",
-        ["Sense / Think / Act", "Action gate", "Agent harness",
-         "Contingency and control groups"])),
-    ("deployment", (
-        "Can I run this in real time, on real hardware?",
-        "A fast classifier can still respond too late. Output reaches the user "
-        "through a display, an interface, or a stimulation device, and each "
-        "destination has its own risk and its own approver.",
-        ["Latency and energy", "Monitoring and assessment",
-         "Neurofeedback", "Responsive neuromodulation"])),
-    ("maturity", (
-        "How strong is the evidence, and how mature is the system?",
-        "Lab asks whether the state can be estimated. Pilot lets the estimate "
-        "change something during a limited experiment. Field uses the complete "
-        "system repeatedly in its intended setting.",
-        ["Lab / Pilot / Field", "Reported gaps in pilot studies",
-         "Reproducibility", "Outcome measures"])),
+        "inside the range in which it was tested. Most published systems stop "
+        "after Sense and report an accuracy; the loop is where the hard "
+        "problems live.",
+        ["Sense, Think and Act", "Action gating and fallbacks",
+         "Agent harness and retained state", "Real-time operation and latency"],
+        "Systems",
+        "Sense proposes, Act decides, a harness keeps the system inside what "
+        "was tested")),
+    ("applications", (
+        "Application Domains",
+        "Monitoring estimates a state and stops, neurofeedback hands it to the "
+        "person, neuroadaptive interfaces change the environment, and "
+        "responsive neuromodulation changes the brain state directly. The four "
+        "families do not share an evaluation, so a result from one is not "
+        "evidence for another.",
+        ["Monitoring and clinical assessment", "Neurofeedback and self-regulation",
+         "Neuroadaptive interfaces", "Responsive neuromodulation"],
+        "Systems",
+        "Four families of system, and what each does with an estimate once it "
+        "has it")),
     ("governance", (
-        "Where is the boundary of what the system may do?",
-        "A neural recording can reveal more than the purpose for which it was "
-        "collected. Consent, authorisation and deletion need their own rules.",
-        ["Re-identification risk", "Consent scope", "Retained state",
-         "Clinician oversight"])),
+        "Governance & Ethics",
+        "Consent to record a signal does not authorise later inference from "
+        "it, and an adaptive system needs a stated boundary before it reaches "
+        "one. The risk is not only that a recording leaks, but that a system "
+        "built for one purpose quietly acquires another.",
+        ["Re-identification risk", "Consent scope and secondary use",
+         "Retained state and deletion", "Clinician and user oversight"],
+        "Boundaries",
+        "A neural recording reveals more than the purpose it was collected for")),
 ])
 
-# Subsection title -> cluster. Keyed by title so the mapping survives edits
+# The tiers group the areas into the order a reader meets them.
+TIERS = OrderedDict([
+    ("Foundations", ["signal", "corpora"]),
+    ("Methods", ["architectures", "generalization"]),
+    ("Validation", ["evaluation", "maturity"]),
+    ("Systems", ["closed-loop", "applications"]),
+    ("Boundaries", ["governance"]),
+])
+
+# One line on what a tier is for. Shown on every page filed in that tier.
+TIER_NOTES = {
+    "Foundations": "What the recording is, and what the label means.",
+    "Methods": "How a recording becomes a prediction.",
+    "Validation": "Whether the prediction can be believed, and how far.",
+    "Systems": "What the prediction is used for, once it exists.",
+    "Boundaries": "What has to be settled before any of it runs.",
+}
+
+# Subsection title -> area. Keyed by title so the mapping survives edits
 # to the order of the survey's sections.
 # Framing sections. A reference cited here is cross-cutting: it supports the
-# argument of the survey as a whole and does not belong to one question.
+# argument of the survey as a whole and does not belong to one area.
 FRAMING_SECTIONS = {"__intro__", "__decoding_intro__", "__agent_intro__",
                     "__applications_intro__", "__levels_intro__",
                     "__challenges_intro__", "__conclusion__"}
 
-SECTION_CLUSTER = {
+SECTION_AREA = {
     # 02 Decoding
-    "Acquisition Modalities": "datasets",
-    "Decoding Targets and Datasets": "datasets",
+    "Acquisition Modalities": "signal",
+    "Decoding Targets and Datasets": "corpora",
     "Evaluation Settings and Leakage": "evaluation",
-    "Distribution Shift and Transfer": "transfer",
-    "Model Architectures and Pre-Training": "model",
+    "Distribution Shift and Transfer": "generalization",
+    "Model Architectures and Pre-Training": "architectures",
     # 03 Agent loop
     "Sense: Building a Reliable Observation": "closed-loop",
     "Think: Turning an Estimate into a Proposal": "closed-loop",
@@ -112,31 +191,39 @@ SECTION_CLUSTER = {
     "How Action Changes Later Data": "closed-loop",
     "Who Controls the Action": "closed-loop",
     # 04 Applications
-    "Affect Monitoring and Assessment": "deployment",
-    "Neurofeedback and Self-Regulation": "closed-loop",
-    "Neuroadaptive Interfaces": "closed-loop",
-    "Responsive Neuromodulation": "deployment",
+    "Affect Monitoring and Assessment": "applications",
+    "Neurofeedback and Self-Regulation": "applications",
+    "Neuroadaptive Interfaces": "applications",
+    "Responsive Neuromodulation": "applications",
     # 05 Levels
     "Lab: testing the estimate": "maturity",
     "Pilot: testing the interaction": "maturity",
     "Field: testing long-term use": "maturity",
     # 06 Challenges
-    "Target validity": "evaluation",
-    "Transfer": "transfer",
-    "Real-time operation": "deployment",
+    "Target validity": "corpora",
+    "Transfer": "generalization",
+    "Real-time operation": "closed-loop",
     "Demonstrated benefit": "maturity",
     "Governance": "governance",
 }
 
-# Fallback for references the survey cites only as framing: infer the question
+# Fallback for references the survey cites only as framing: infer the area
 # from the title. Ordered by specificity.
-TITLE_CLUSTER = [
-    ("datasets", r"\b(dataset|corpus|SEED|DEAP|DREAMER|AMIGOS|MPED|FACED|annotation)\b"),
+TITLE_AREA = [
+    ("governance", r"\b(govern|ethic|consent|privacy|re-identif|anonym|"
+                   r"authenticat|retention|four prior)\w*\b"),
+    ("corpora", r"\b(dataset|corpus|SEED|DEAP|DREAMER|AMIGOS|MPED|FACED|"
+                r"annotation|label|target|benchmark)\w*\b"),
     ("evaluation", r"\b(evaluat|leakage|audit|explain|interpretab|spectral)\b"),
-    ("transfer", r"\b(cross-subject|domain|transfer|generaliz|adapt)\w*\b"),
-    ("closed-loop", r"\b(closed-loop|neurofeedback|agent|music|real-time|stimulat)\w*\b"),
-    ("deployment", r"\b(clinical|depress|patient|disorder|monitor)\w*\b"),
-    ("model", r"\b(graph|transformer|mamba|attention|convolution|network|pre-train|contrastive)\w*\b"),
+    ("generalization", r"\b(cross-subject|domain|transfer|generaliz|adapt)\w*\b"),
+    ("closed-loop", r"\b(closed-loop|neurofeedback|agent|music|real-time|"
+                    r"stimulat|neuroprosthe)\w*\b"),
+    ("applications", r"\b(clinical|depress|patient|disorder|monitor|"
+                      r"neuroadapt|self-regulat)\w*\b"),
+    ("architectures", r"\b(graph|transformer|mamba|attention|convolution|"
+                       r"network|pre-train|contrastive|representation)\w*\b"),
+    ("signal", r"\b(modality|electrode|scalp|intracranial|artifact|artefact|"
+                r"few-channel|fNIRS|fMRI|iEEG)\w*\b"),
 ]
 
 # file -> (preamble label, [subsection titles])
@@ -477,7 +564,7 @@ FALLBACK_NOTES = {
 }
 
 
-def annotation_for(key: str, entry: dict, cluster: str, table_rows: list[dict]) -> str:
+def annotation_for(key: str, entry: dict, area: str, table_rows: list[dict]) -> str:
     """A one-line reason to open this reference."""
     if key in NOTES:
         return NOTES[key]
@@ -526,19 +613,19 @@ def main() -> None:
     records = []
     for key, entry in entries.items():
         c = cites.get(key, Counter())
-        clusters = []
+        areas = []
         for section, _ in c.most_common():
-            cl = SECTION_CLUSTER.get(section)
-            if cl and cl not in clusters:
-                clusters.append(cl)
+            cl = SECTION_AREA.get(section)
+            if cl and cl not in areas:
+                areas.append(cl)
 
         # A reference cited only in framing sections carries the argument of the
-        # survey as a whole; it is filed under the question it touches most,
+        # survey as a whole; it is filed under the area it touches most,
         # or left cross-cutting when nothing else applies.
         framing_only = bool(c) and all(
             s in FRAMING_SECTIONS for s in c)
-        if not clusters:
-            clusters = ["maturity"]
+        if not areas:
+            areas = ["maturity"]
 
         # The maturity tier is what a reference supports, not where it is
         # mentioned. A study is usually cited in the levels section and again
@@ -550,30 +637,31 @@ def main() -> None:
 
         weights = Counter()
         for section, n in c.items():
-            cl = SECTION_CLUSTER.get(section)
+            cl = SECTION_AREA.get(section)
             if cl:
                 weights[cl] += n
         primary = (min(weights.items(),
-                       key=lambda kv: (-kv[1], list(CLUSTERS).index(kv[0])))[0]
-                   if weights else clusters[0])
+                       key=lambda kv: (-kv[1], list(AREAS).index(kv[0])))[0]
+                   if weights else areas[0])
 
         if levels:
             primary = "maturity"
-            clusters = ["maturity"] + [x for x in clusters if x != "maturity"]
+            areas = ["maturity"] + [x for x in areas if x != "maturity"]
 
-        # Framing-only references get a cluster from their own title, since the
+        # Framing-only references get an area from their own title, since the
         # surrounding prose places them but does not test them.
         if framing_only:
             hay = (entry["title"] + " " + entry["venue"]).lower()
-            for cl, pattern in TITLE_CLUSTER:
+            for cl, pattern in TITLE_AREA:
                 if re.search(pattern, hay, re.I):
                     primary = cl
-                    clusters = [cl]
+                    areas = [cl]
                     break
 
         rec = dict(entry)
-        rec["primary_cluster"] = primary
-        rec["clusters"] = clusters
+        rec["primary_area"] = primary
+        rec["areas"] = areas
+        rec["tier"] = AREAS[primary][3]
         rec["sections"] = sorted(c.keys())
         rec["cite_count"] = sum(c.values())
         rec["code"] = CODE_OVERRIDES.get(key, "")
@@ -582,12 +670,12 @@ def main() -> None:
                                       [r for _, r in table_by_key.get(key, [])])
         records.append(rec)
 
-    records.sort(key=lambda r: (list(CLUSTERS).index(r["primary_cluster"]),
+    records.sort(key=lambda r: (list(AREAS).index(r["primary_area"]),
                                  -(int(r["year"]) if r["year"].isdigit() else 0),
                                  r["title"].lower()))
 
     out = ROOT / "resources"
-    (out / "by-question").mkdir(parents=True, exist_ok=True)
+    (out / "by-area").mkdir(parents=True, exist_ok=True)
 
     corpora = []
     for label, rows in tables.items():
@@ -608,8 +696,10 @@ def main() -> None:
             })
 
     (out / "papers.json").write_text(json.dumps({
-        "clusters": {k: {"question": v[0], "summary": v[1], "aspects": v[2]}
-                     for k, v in CLUSTERS.items()},
+        "areas": {k: {"title": v[0], "summary": v[1], "aspects": v[2],
+                      "tier": v[3], "settles": v[4]}
+                  for k, v in AREAS.items()},
+        "tiers": {t: list(areas) for t, areas in TIERS.items()},
         "corpora": corpora,
         "papers": records,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -620,21 +710,23 @@ def main() -> None:
         "Every reference cited by the survey, with a direct link. "
         "Generated by `scripts/build_resources.py`; do not edit by hand.",
         "",
-        "| Paper | Year | Venue | Question | Links |",
+        "| Paper | Year | Venue | Area | Links |",
         "| --- | ---: | --- | --- | --- |",
     ]
     for r in records:
         lines.append("| [%s](%s) | %s | %s | %s | %s |" % (
             r["title"], r["doi"] or r["arxiv"] or r["url"] or "#",
-            r["year"], r["venue"], CLUSTERS[r["primary_cluster"]][0], link_cell(r)))
+            r["year"], r["venue"], AREAS[r["primary_area"]][0], link_cell(r)))
     (out / "papers.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-    for key, (question, summary, aspects) in CLUSTERS.items():
-        members = [r for r in records if key in r["clusters"]]
-        prim = sum(1 for r in members if r["primary_cluster"] == key)
-        page = ["# %s" % question, "", summary, "",
-                "**%d references** list here; %d are filed primarily under this question."
-                % (len(members), prim), "",
+    for key, (title, summary, aspects, tier, settles) in AREAS.items():
+        members = [r for r in records if key in r["areas"]]
+        prim = sum(1 for r in members if r["primary_area"] == key)
+        page = ["# %s" % title, "",
+                "> **%s tier** — %s" % (tier, TIER_NOTES[tier]), "",
+                settles + ".", "",
+                summary, "",
+                "**%d references** are listed here; %d of them are filed primarily "
+                "under this area." % (len(members), prim), "",
                 "## What to look for", ""]
         page += ["- %s" % a for a in aspects]
         page += ["", "## References", "",
@@ -644,8 +736,41 @@ def main() -> None:
             page.append("| [%s](%s) | %s | %s | %s | %s |" % (
                 r["title"], r["doi"] or r["arxiv"] or r["url"] or "#",
                 r["year"], r["venue"], r["note"], link_cell(r)))
-        (out / "by-question" / ("%s.md" % key)).write_text(
+        # Sibling areas in the same tier, so a reader can move sideways.
+        siblings = [k for k in TIERS[tier] if k != key]
+        page += ["", "---", ""]
+        if siblings:
+            page.append("**Also in the %s tier:** %s." % (
+                tier, ", ".join("[%s](%s.md)" % (AREAS[k][0], k)
+                                for k in siblings)))
+        else:
+            page.append("This is the only area in the %s tier." % tier)
+        page += ["",
+                 "All nine areas: [research-area index](README.md) · "
+                 "back to the [resource index](../README.md)."]
+        (out / "by-area" / ("%s.md" % key)).write_text(
             "\n".join(page) + "\n", encoding="utf-8")
+
+    # Index page for the directory itself, so that resources/by-area/ opens
+    # on something useful rather than a file listing.
+    page = ["# Research areas", "",
+            "The nine areas the index is organised around, in the five tiers a "
+            "reader meets them in.", ""]
+    for tier, keys in TIERS.items():
+        page += ["## %s" % tier, "", TIER_NOTES[tier], "",
+                 "| Research area | References | What it settles |",
+                 "|:--|--:|:--|"]
+        for key in keys:
+            title, _, _, _, settles = AREAS[key]
+            members = [r for r in records if key in r["areas"]]
+            page.append("| [%s](%s.md) | %d | %s |"
+                        % (title, key, len(members), settles))
+        page.append("")
+    page += ["---", "",
+             "Back to the [resource index](../README.md) · "
+             "[all references in one table](../papers.md)."]
+    (out / "by-area" / "README.md").write_text(
+        "\n".join(page) + "\n", encoding="utf-8")
 
     # Corpora page, grouped by how the target was obtained.
     page = ["# Corpora", "",
@@ -679,11 +804,14 @@ def main() -> None:
         if not (r["doi"] or r["arxiv"] or r["url"]):
             print("  MISSING:", r["key"], "|", r["title"])
     print()
-    for key, (question, _, _) in CLUSTERS.items():
-        prim = sum(1 for r in records if r["primary_cluster"] == key)
-        cross = sum(1 for r in records if key in r["clusters"] and r["primary_cluster"] != key)
-        print("  %-11s primary %3d  cross %3d  total %3d  %s" % (key, prim, cross,
-                                                                prim + cross, question))
+    for tier, keys in TIERS.items():
+        print("  [%s]" % tier)
+        for key in keys:
+            prim = sum(1 for r in records if r["primary_area"] == key)
+            cross = sum(1 for r in records
+                        if key in r["areas"] and r["primary_area"] != key)
+            print("    %-14s primary %3d  cross %3d  total %3d  %s"
+                  % (key, prim, cross, prim + cross, AREAS[key][0]))
 
 
 if __name__ == "__main__":

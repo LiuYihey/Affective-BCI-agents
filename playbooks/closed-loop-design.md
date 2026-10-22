@@ -117,6 +117,8 @@ recording is drawn from a different distribution than the last.
 
 ## Related
 
-- [How do I wire a decoder into a loop that stays safe?](../resources/by-question/closed-loop.md)
-- [Can I run this in real time?](../resources/by-question/deployment.md)
+- [Closed-Loop Systems](../resources/by-area/closed-loop.md) — the references
+  behind this checklist
+- [Application Domains](../resources/by-area/applications.md) — where the
+  output of the loop goes
 - [Reviewing a pilot system](maturity-ladder.md)

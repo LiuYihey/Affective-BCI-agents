@@ -40,7 +40,7 @@ first one: **what was held out** determines what your result generalises to.
 > Splitting by window rather than by subject is the most common way an
 > otherwise sound model reports a number that does not survive contact with a
 > new person. See
-> [Is that accuracy real?](../resources/by-question/evaluation.md) for the
+> [Evaluation & Leakage Control](../resources/by-area/evaluation.md) for the
 > audits that measured how much this matters.
 
 ## 3. Check what else the model could be reading
@@ -107,7 +107,8 @@ A saliency map is not an explanation.
 
 ## Related
 
-- [Is that accuracy real?](../resources/by-question/evaluation.md) — the
+- [Evaluation & Leakage Control](../resources/by-area/evaluation.md) — the
   references behind this checklist
-- [Will it work on a person I have never seen?](../resources/by-question/transfer.md)
+- [Generalization & Transfer](../resources/by-area/generalization.md) — what the
+  held-out unit decides
 - [Reviewing a pilot system](maturity-ladder.md)

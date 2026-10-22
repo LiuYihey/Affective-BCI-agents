@@ -17,18 +17,19 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: question
+    id: area
     attributes:
-      label: Which question does this paper answer?
+      label: Which research area does this paper belong to?
       options:
-        - Which corpus should I use?
-        - How do I turn a recording into a prediction?
-        - Will it work on a person I have never seen?
-        - Is that accuracy real?
-        - How do I wire a decoder into a loop that stays safe?
-        - Can I run this in real time?
-        - How strong is the evidence?
-        - Where is the boundary?
+        - Signal Acquisition & Quality
+        - Affective Targets & Corpora
+        - Decoding Architectures
+        - Generalization & Transfer
+        - Evaluation & Leakage Control
+        - Evidence Maturity
+        - Closed-Loop Systems
+        - Application Domains
+        - Governance & Ethics
     validations:
       required: true
   - type: textarea

@@ -41,7 +41,7 @@ a matter of sample size — it is a matter of what the system is allowed to do.
 **Common gap.** The reported accuracy is a pooled number over a
 subject-informed split, and it is presented as evidence that the system
 detects the state in the user's own setting.
-→ See [Is that accuracy real?](../resources/by-question/evaluation.md)
+→ See [Evaluation & Leakage Control](../resources/by-area/evaluation.md)
 
 ---
 
@@ -84,7 +84,7 @@ controls become essential rather than optional.
 > but not learning; a workload-adaptive guidance system where adaptation
 > produced more errors than the baseline; an image-generation system whose
 > second experiment removed the neural input. These are documented in
-> [How strong is the evidence?](../resources/by-question/maturity.md).
+> [Evidence Maturity](../resources/by-area/maturity.md).
 
 ---
 
@@ -144,6 +144,8 @@ about Levels 2 and 3, and the abstract collapses the difference.
 
 ## Related
 
-- [How strong is the evidence?](../resources/by-question/maturity.md)
+- [Evidence Maturity](../resources/by-area/maturity.md) — the references behind
+  this ladder
 - [Designing an evaluation](evaluation-protocol.md)
-- [Where is the boundary?](../resources/by-question/governance.md)
+- [Governance & Ethics](../resources/by-area/governance.md) — the arrangements
+  a level-3 claim has to name

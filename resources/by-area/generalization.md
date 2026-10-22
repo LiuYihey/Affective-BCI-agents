@@ -1,15 +1,19 @@
-# Will it still work on a person I have never seen?
+# Generalization & Transfer
 
-Recordings change across people, across sessions, and across devices. The unit held out during testing states how far a result can travel.
+> **Methods tier** — How a recording becomes a prediction.
 
-**36 references** list here; 32 are filed primarily under this question.
+The unit held out during testing states how far a result can travel.
+
+Recordings change across people, across sessions, and across devices. The amount of target-side data available for adaptation is part of the method rather than a detail of the protocol, and a method that needs a labelled target is a method that has to be re-run for every new user.
+
+**36 references** are listed here; 32 of them are filed primarily under this area.
 
 ## What to look for
 
 - Within-subject to cross-dataset
-- Domain generalisation
-- Unsupervised adaptation
-- Personalisation
+- Domain generalization
+- Unsupervised and source-free adaptation
+- Personalization
 
 ## References
 
@@ -49,5 +53,11 @@ Recordings change across people, across sessions, and across devices. The unit h
 | [A Prototype-Based SPD Matrix Network for Domain Adaptation EEG Emotion Recognition](https://doi.org/10.1016/j.patcog.2020.107626) | 2021 | Pattern Recognition | Prototypes in the SPD manifold, where covariance is the natural representation. | [DOI](https://doi.org/10.1016/j.patcog.2020.107626) |
 | [A Review on Transfer Learning in EEG Signal Analysis](https://doi.org/10.1016/j.neucom.2020.09.017) | 2021 | Neurocomputing | A review of transfer learning in EEG analysis. | [DOI](https://doi.org/10.1016/j.neucom.2020.09.017) |
 | [Transfer learning for brain-computer interfaces: A Euclidean space data alignment approach](https://doi.org/10.1109/TBME.2019.2913914) | 2020 | IEEE Transactions on Biomedical Engineering | Transfer that works in the SPD space of covariance matrices. | [DOI](https://doi.org/10.1109/TBME.2019.2913914) |
-| [Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review](https://doi.org/10.1016/j.biopsych.2025.10.005) | 2026 | Biological Psychiatry | Which intracranial biomarkers could actually guide stimulation. | [DOI](https://doi.org/10.1016/j.biopsych.2025.10.005) |
 | [Decoding naturalistic affective behaviour from spectro-spatial features in multiday human iEEG](https://doi.org/10.1038/s41562-022-01310-0) | 2022 | Nature Human Behaviour | 116 hours over 11 participants, and a gap between per-person and group accuracy. | [DOI](https://doi.org/10.1038/s41562-022-01310-0) |
+| [Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review](https://doi.org/10.1016/j.biopsych.2025.10.005) | 2026 | Biological Psychiatry | Which intracranial biomarkers could actually guide stimulation. | [DOI](https://doi.org/10.1016/j.biopsych.2025.10.005) |
+
+---
+
+**Also in the Methods tier:** [Decoding Architectures](architectures.md).
+
+All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

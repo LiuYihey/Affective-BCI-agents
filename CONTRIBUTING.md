@@ -44,9 +44,27 @@ python scripts/check_links.py          # every link still resolves
 All four run in CI on every push, so a pull request that breaks any of them
 fails the build rather than landing broken.
 
+## Changing the taxonomy
+
+The nine research areas and the five tiers they sit in are defined in
+`scripts/build_resources.py`. Each area carries a title, a scope, the aspects
+to look for, its tier, and one line stating what it settles. Changing any of
+them means editing `AREAS` and `TIERS` there, then regenerating:
+
+```
+python scripts/build_resources.py          # the index and the area pages
+python scripts/make_taxonomy_figure.py     # the figure in the README
+```
+
+The figure reads the same definitions and the same counts as the index, so
+the two cannot drift apart silently. `check_index.py` then confirms that the
+committed pages agree with the committed index, that the reference counts in
+the hand-written tables are right, and that the "what it settles" wording in
+the README is the wording the index defines.
+
 ## What earns a place here
 
-The index is organised around eight questions a practitioner actually asks.
+The index is organised around nine research areas, grouped into five tiers.
 A reference belongs here if it informs one of them.
 
 References are included when they:
@@ -57,7 +75,7 @@ References are included when they:
 
 References are not included merely because they use EEG, or because they
 classify emotion from some other modality. If you think something belongs and
-it is not here, open an issue and say which question it answers.
+it is not here, open an issue and say which area it belongs to.
 
 ## Notes on tone
 

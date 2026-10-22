@@ -1,85 +1,134 @@
 {
-  "clusters": {
-    "datasets": {
-      "question": "Which corpus should I use?",
-      "summary": "Where the signal comes from, how the label was produced, and how many people it covers. Labels assigned by the experimenter, reported by the participant, or read from behaviour are not interchangeable.",
+  "areas": {
+    "signal": {
+      "title": "Signal Acquisition & Quality",
+      "summary": "The acquisition method sets the first limit on interpretation: scalp EEG is wearable and inexpensive but mixes neural activity with eye and muscle sources, while intracranial coverage differs from patient to patient and prevents direct transfer to scalp recordings.",
       "aspects": [
-        "Signal source and quality",
-        "Target definition",
-        "Corpus size",
-        "Annotation cost"
-      ]
+        "Modalities and what they capture",
+        "Signal quality and artefact handling",
+        "Spatial coverage and channel count",
+        "Few-channel and wearable recording"
+      ],
+      "tier": "Foundations",
+      "settles": "What the recording measures, and how much of it can be trusted"
     },
-    "model": {
-      "question": "How do I turn a multichannel recording into a prediction?",
-      "summary": "Architectures for organising a recording before prediction, and the training objectives that decide which variations the model keeps.",
+    "corpora": {
+      "title": "Affective Targets & Corpora",
+      "summary": "Emotion cannot be observed directly, so every study uses a measurable proxy as its target. A stimulus-elicited target is assigned by the experimenter, a self-reported target comes from the participant, and an expression-observed target is read from behaviour. The three are related but not interchangeable, and a model trained on one can succeed by recognising the clip rather than the state.",
       "aspects": [
-        "CNN / GNN / Transformer / SSM",
+        "Target validity and time scale",
+        "Annotation protocols",
+        "Corpus size and subject coverage",
+        "Cross-corpus comparability"
+      ],
+      "tier": "Foundations",
+      "settles": "Why a measurable proxy stands in for emotion, and what it then means"
+    },
+    "architectures": {
+      "title": "Decoding Architectures",
+      "summary": "A multichannel recording can be arranged as a grid, a graph, or a sequence, and the arrangement decides what the model is able to see. The training objective is the more consequential choice: it determines whether the representation is tied to a task, a subject, or a device.",
+      "aspects": [
+        "Architectures: CNN, GNN, Transformer, SSM",
         "Self-supervised pre-training",
-        "Cross-dataset pre-training",
+        "Cross-dataset and cross-signal pre-training",
         "Device-agnostic representations"
-      ]
+      ],
+      "tier": "Methods",
+      "settles": "How a recording is organised, and which objective decides what the model keeps"
     },
-    "transfer": {
-      "question": "Will it still work on a person I have never seen?",
-      "summary": "Recordings change across people, across sessions, and across devices. The unit held out during testing states how far a result can travel.",
+    "generalization": {
+      "title": "Generalization & Transfer",
+      "summary": "Recordings change across people, across sessions, and across devices. The amount of target-side data available for adaptation is part of the method rather than a detail of the protocol, and a method that needs a labelled target is a method that has to be re-run for every new user.",
       "aspects": [
         "Within-subject to cross-dataset",
-        "Domain generalisation",
-        "Unsupervised adaptation",
-        "Personalisation"
-      ]
+        "Domain generalization",
+        "Unsupervised and source-free adaptation",
+        "Personalization"
+      ],
+      "tier": "Methods",
+      "settles": "The unit held out during testing states how far a result can travel"
     },
     "evaluation": {
-      "question": "Is that accuracy real?",
-      "summary": "The test split decides which question an accuracy answers. A favourable split or repeated access to the test set can beat a better architecture.",
+      "title": "Evaluation & Leakage Control",
+      "summary": "The test split decides which question an accuracy answers. A favourable split or repeated access to the test set can beat a better architecture, and a model can reach a high score by reading a spectral confound rather than the variable of interest.",
       "aspects": [
-        "Split protocols",
-        "Leakage",
-        "Spectral confounds",
-        "Model explanation checks"
-      ]
-    },
-    "closed-loop": {
-      "question": "How do I wire a decoder into a loop that stays safe?",
-      "summary": "Sense turns the signal into a belief, Think proposes an action, Act decides what may reach the user. A harness keeps an adaptive system inside the range that was tested.",
-      "aspects": [
-        "Sense / Think / Act",
-        "Action gate",
-        "Agent harness",
-        "Contingency and control groups"
-      ]
-    },
-    "deployment": {
-      "question": "Can I run this in real time, on real hardware?",
-      "summary": "A fast classifier can still respond too late. Output reaches the user through a display, an interface, or a stimulation device, and each destination has its own risk and its own approver.",
-      "aspects": [
-        "Latency and energy",
-        "Monitoring and assessment",
-        "Neurofeedback",
-        "Responsive neuromodulation"
-      ]
+        "Split protocols and split unit",
+        "Leakage from windows and sessions",
+        "Aperiodic and spectral confounds",
+        "Perturbation-based explanation checks"
+      ],
+      "tier": "Validation",
+      "settles": "A favourable split or repeated test-set access can beat a better architecture"
     },
     "maturity": {
-      "question": "How strong is the evidence, and how mature is the system?",
-      "summary": "Lab asks whether the state can be estimated. Pilot lets the estimate change something during a limited experiment. Field uses the complete system repeatedly in its intended setting.",
+      "title": "Evidence Maturity",
+      "summary": "A result supports a claim only at the level whose evidence it actually provides, and the evidence for a level has to be gathered at that level. Missing controls and undefined outcome measures are what separate one level from the next.",
       "aspects": [
-        "Lab / Pilot / Field",
-        "Reported gaps in pilot studies",
-        "Reproducibility",
-        "Outcome measures"
-      ]
+        "Lab, Pilot and Field",
+        "Missing controls and contingencies",
+        "Outcome measures and user benefit",
+        "Reproducibility of the pipeline"
+      ],
+      "tier": "Validation",
+      "settles": "Lab estimates the state; Pilot changes something; Field holds up over time"
+    },
+    "closed-loop": {
+      "title": "Closed-Loop Systems",
+      "summary": "Sense turns the signal into a belief, Think proposes an action, Act decides what may reach the user. A harness keeps an adaptive system inside the range in which it was tested. Most published systems stop after Sense and report an accuracy; the loop is where the hard problems live.",
+      "aspects": [
+        "Sense, Think and Act",
+        "Action gating and fallbacks",
+        "Agent harness and retained state",
+        "Real-time operation and latency"
+      ],
+      "tier": "Systems",
+      "settles": "Sense proposes, Act decides, a harness keeps the system inside what was tested"
+    },
+    "applications": {
+      "title": "Application Domains",
+      "summary": "Monitoring estimates a state and stops, neurofeedback hands it to the person, neuroadaptive interfaces change the environment, and responsive neuromodulation changes the brain state directly. The four families do not share an evaluation, so a result from one is not evidence for another.",
+      "aspects": [
+        "Monitoring and clinical assessment",
+        "Neurofeedback and self-regulation",
+        "Neuroadaptive interfaces",
+        "Responsive neuromodulation"
+      ],
+      "tier": "Systems",
+      "settles": "Four families of system, and what each does with an estimate once it has it"
     },
     "governance": {
-      "question": "Where is the boundary of what the system may do?",
-      "summary": "A neural recording can reveal more than the purpose for which it was collected. Consent, authorisation and deletion need their own rules.",
+      "title": "Governance & Ethics",
+      "summary": "Consent to record a signal does not authorise later inference from it, and an adaptive system needs a stated boundary before it reaches one. The risk is not only that a recording leaks, but that a system built for one purpose quietly acquires another.",
       "aspects": [
         "Re-identification risk",
-        "Consent scope",
-        "Retained state",
-        "Clinician oversight"
-      ]
+        "Consent scope and secondary use",
+        "Retained state and deletion",
+        "Clinician and user oversight"
+      ],
+      "tier": "Boundaries",
+      "settles": "A neural recording reveals more than the purpose it was collected for"
     }
+  },
+  "tiers": {
+    "Foundations": [
+      "signal",
+      "corpora"
+    ],
+    "Methods": [
+      "architectures",
+      "generalization"
+    ],
+    "Validation": [
+      "evaluation",
+      "maturity"
+    ],
+    "Systems": [
+      "closed-loop",
+      "applications"
+    ],
+    "Boundaries": [
+      "governance"
+    ]
   },
   "corpora": [
     {
@@ -294,6 +343,140 @@
   ],
   "papers": [
     {
+      "key": "liu2024fewchannel",
+      "title": "Emotion Recognition From Few-Channel EEG Signals by Integrating Deep Feature Aggregation and Transfer Learning",
+      "venue": "IEEE Transactions on Affective Computing",
+      "year": "2024",
+      "type": "article",
+      "doi": "https://doi.org/10.1109/TAFFC.2023.3336531",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "signal",
+      "areas": [
+        "signal"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Acquisition Modalities"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Decoding from few electrodes, which is what a wearable actually provides."
+    },
+    {
+      "key": "qasim2023neuronal",
+      "title": "Neuronal activity in the human amygdala and hippocampus enhances emotional memory encoding",
+      "venue": "Nature Human Behaviour",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41562-022-01502-8",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "signal",
+      "areas": [
+        "signal"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Acquisition Modalities"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Amygdala and hippocampus activity predicting mood on the next day."
+    },
+    {
+      "key": "dehghani2020probing",
+      "title": "Probing fMRI brain connectivity and activity changes during emotion regulation by EEG neurofeedback",
+      "venue": "Frontiers in Human Neuroscience",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.3389/fnhum.2022.988890",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "signal",
+      "areas": [
+        "signal",
+        "applications"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Acquisition Modalities",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "fMRI connectivity during emotion regulation, the imaging counterpart."
+    },
+    {
+      "key": "kim2026closed",
+      "title": "Closed-Loop Brain-Computer Interfaces (BCI) Enhanced With AI-Driven Neurofeedback Using Soft Bioelectronic Networks: A Comparative Study With IBRAINTECH and Proposal of a New Hybrid Model",
+      "venue": "International Journal of Grid Computing & Applications",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.5121/ijgca.2026.17101",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Soft bioelectronic interfaces for closed-loop neurofeedback."
+    },
+    {
+      "key": "pham2026cross",
+      "title": "Cross-Subject Intracranial EEG Reconstruction from Scalp Recordings Using Multi-Scale Cross-Attention Transformers",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2605.18897",
+      "arxiv": "https://arxiv.org/abs/2605.18897",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Reconstructing intracranial activity from scalp recordings."
+    },
+    {
+      "key": "zhou2026brain",
+      "title": "Learning from Brain Topography: A Hierarchical Local-Global Graph-Transformer Network for EEG Emotion Recognition",
+      "venue": "arXiv preprint arXiv:2601.10525",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2601.10525",
+      "arxiv": "https://arxiv.org/abs/2601.10525",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Topography as the structure the model builds on."
+    },
+    {
       "key": "guo2026mad",
       "title": "MAD: A Multimodal and Multi-perspective Affective Dataset with Hierarchical Annotations",
       "venue": "",
@@ -302,11 +485,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2603.06206",
       "arxiv": "https://arxiv.org/abs/2603.06206",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets",
-        "evaluation"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets",
         "Target validity",
@@ -326,11 +509,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.18671",
       "arxiv": "https://arxiv.org/abs/2607.18671",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets",
-        "deployment"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora",
+        "applications"
       ],
+      "tier": "Foundations",
       "sections": [
         "Affect Monitoring and Assessment",
         "Decoding Targets and Datasets"
@@ -349,10 +533,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2508.05933",
       "arxiv": "https://arxiv.org/abs/2508.05933",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -360,6 +545,28 @@
       "code": "",
       "levels": [],
       "note": "Feature selection when part of the annotation is missing."
+    },
+    {
+      "key": "li2026sa",
+      "title": "SA-HGNN: Sample-Adaptive Hyperbolic Graph Neural Network for EEG-Based Depression Recognition",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.02063",
+      "arxiv": "https://arxiv.org/abs/2607.02063",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Hyperbolic geometry for depression recognition."
     },
     {
       "key": "kukhilava2025evaluation",
@@ -370,12 +577,13 @@
       "doi": "https://doi.org/10.48550/arXiv.2505.18175",
       "arxiv": "https://arxiv.org/abs/2505.18175",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora",
         "evaluation",
-        "deployment"
+        "applications"
       ],
+      "tier": "Foundations",
       "sections": [
         "Affect Monitoring and Assessment",
         "Decoding Targets and Datasets",
@@ -396,10 +604,11 @@
       "doi": "https://doi.org/10.1109/taffc.2024.3485057",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -407,27 +616,6 @@
       "code": "",
       "levels": [],
       "note": "Six emotions plus neutral with continuous intensity, and four sessions."
-    },
-    {
-      "key": "liu2024fewchannel",
-      "title": "Emotion Recognition From Few-Channel EEG Signals by Integrating Deep Feature Aggregation and Transfer Learning",
-      "venue": "IEEE Transactions on Affective Computing",
-      "year": "2024",
-      "type": "article",
-      "doi": "https://doi.org/10.1109/TAFFC.2023.3336531",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
-      ],
-      "sections": [
-        "Acquisition Modalities"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Decoding from few electrodes, which is what a wearable actually provides."
     },
     {
       "key": "chen2023faced",
@@ -438,10 +626,11 @@
       "doi": "https://doi.org/10.1038/s41597-023-02650-w",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -449,50 +638,6 @@
       "code": "",
       "levels": [],
       "note": "The largest stimulus-elicited corpus here: 123 participants, nine classes."
-    },
-    {
-      "key": "qasim2023neuronal",
-      "title": "Neuronal activity in the human amygdala and hippocampus enhances emotional memory encoding",
-      "venue": "Nature Human Behaviour",
-      "year": "2023",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s41562-022-01502-8",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
-      ],
-      "sections": [
-        "Acquisition Modalities"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Amygdala and hippocampus activity predicting mood on the next day."
-    },
-    {
-      "key": "dehghani2020probing",
-      "title": "Probing fMRI brain connectivity and activity changes during emotion regulation by EEG neurofeedback",
-      "venue": "Frontiers in Human Neuroscience",
-      "year": "2023",
-      "type": "article",
-      "doi": "https://doi.org/10.3389/fnhum.2022.988890",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets",
-        "closed-loop"
-      ],
-      "sections": [
-        "Acquisition Modalities",
-        "Neurofeedback and Self-Regulation"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "fMRI connectivity during emotion regulation, the imaging counterpart."
     },
     {
       "key": "liu2022comparing",
@@ -503,10 +648,11 @@
       "doi": "https://doi.org/10.1109/tcds.2021.3071170",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -514,6 +660,28 @@
       "code": "",
       "levels": [],
       "note": "Adds eye tracking to SEED-V, so the label has an independent behavioural channel."
+    },
+    {
+      "key": "zhang2022visual2eeg",
+      "title": "Visual-to-EEG Cross-Modal Knowledge Distillation for Continuous Emotion Recognition",
+      "venue": "Pattern Recognition",
+      "year": "2022",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.patcog.2022.108833",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Knowledge distilled from visual stimuli into EEG representations."
     },
     {
       "key": "mirandacorrea2021amigos",
@@ -524,10 +692,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2018.2884461",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -545,10 +714,11 @@
       "doi": "https://doi.org/10.1109/taffc.2018.2840973",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -566,10 +736,11 @@
       "doi": "https://doi.org/10.1109/tcyb.2018.2797176",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -587,10 +758,11 @@
       "doi": "https://doi.org/10.1109/ACCESS.2019.2891579",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -598,6 +770,30 @@
       "code": "",
       "levels": [],
       "note": "Seven emotion categories with three questionnaires, the hardest categorical corpus here."
+    },
+    {
+      "key": "rudin2019explain",
+      "title": "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead",
+      "venue": "Nature Machine Intelligence",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s42256-019-0048-x",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "evaluation",
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Evaluation Settings and Leakage",
+        "Target validity"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "The case for perturbing inputs instead of reading saliency maps."
     },
     {
       "key": "katsigiannis2018dreamer",
@@ -608,10 +804,11 @@
       "doi": "https://doi.org/10.1109/JBHI.2017.2688239",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -619,6 +816,54 @@
       "code": "",
       "levels": [],
       "note": "Valence, arousal and dominance with ECG, widely used for cross-subject comparison."
+    },
+    {
+      "key": "woo2017buildingbiomarkers",
+      "title": "Building Better Biomarkers: Brain Models in Translational Neuroimaging",
+      "venue": "Nature Neuroscience",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nn.4478",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "closed-loop",
+        "corpora",
+        "governance"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Governance",
+        "Target validity",
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "Defines a biomarker backwards from its intended use, the basis of the governance rules."
+    },
+    {
+      "key": "drysdale2017depressionsubtypes",
+      "title": "Resting-state connectivity biomarkers define neurophysiological subtypes of depression",
+      "venue": "Nature Medicine",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nm.4246",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
+      ],
+      "tier": "Foundations",
+      "sections": [
+        "Target validity"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Resting-state subtypes of depression, and their response to treatment."
     },
     {
       "key": "zheng2015investigating",
@@ -629,10 +874,11 @@
       "doi": "https://doi.org/10.1109/tamd.2015.2431497",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -650,10 +896,11 @@
       "doi": "https://doi.org/10.1109/t-affc.2011.25",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -671,10 +918,11 @@
       "doi": "https://doi.org/10.1109/t-affc.2011.15",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "datasets",
-      "clusters": [
-        "datasets"
+      "primary_area": "corpora",
+      "areas": [
+        "corpora"
       ],
+      "tier": "Foundations",
       "sections": [
         "Decoding Targets and Datasets"
       ],
@@ -692,10 +940,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.20812",
       "arxiv": "https://arxiv.org/abs/2606.20812",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -713,11 +962,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2608.04156",
       "arxiv": "https://arxiv.org/abs/2608.04156",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model",
+      "primary_area": "architectures",
+      "areas": [
+        "architectures",
         "closed-loop"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training",
         "Think: Turning an Estimate into a Proposal"
@@ -736,10 +986,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.09543",
       "arxiv": "https://arxiv.org/abs/2607.09543",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -757,10 +1008,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2605.12999",
       "arxiv": "https://arxiv.org/abs/2605.12999",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -778,10 +1030,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.16462",
       "arxiv": "https://arxiv.org/abs/2606.16462",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -799,10 +1052,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2607.04139",
       "arxiv": "https://arxiv.org/abs/2607.04139",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -820,10 +1074,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2605.26624",
       "arxiv": "https://arxiv.org/abs/2605.26624",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -841,11 +1096,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.20673",
       "arxiv": "https://arxiv.org/abs/2606.20673",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model",
+      "primary_area": "architectures",
+      "areas": [
+        "architectures",
         "governance"
       ],
+      "tier": "Methods",
       "sections": [
         "Governance",
         "Model Architectures and Pre-Training"
@@ -864,12 +1120,13 @@
       "doi": "",
       "arxiv": "https://arxiv.org/abs/2511.08444",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model",
-        "transfer",
-        "deployment"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures",
+        "generalization",
+        "applications"
       ],
+      "tier": "Methods",
       "sections": [
         "Affect Monitoring and Assessment",
         "Distribution Shift and Transfer",
@@ -891,10 +1148,11 @@
       "doi": "",
       "arxiv": "https://arxiv.org/abs/2606.21973",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -912,10 +1170,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.06629",
       "arxiv": "https://arxiv.org/abs/2607.06629",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -933,10 +1192,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.11950",
       "arxiv": "https://arxiv.org/abs/2607.11950",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -954,10 +1214,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2606.10718",
       "arxiv": "https://arxiv.org/abs/2606.10718",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training",
         "__intro__"
@@ -976,11 +1237,12 @@
       "doi": "https://doi.org/10.1007/978-3-032-05162-2_2",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
+      "primary_area": "architectures",
+      "areas": [
         "evaluation",
-        "model"
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Evaluation Settings and Leakage",
         "Model Architectures and Pre-Training"
@@ -999,10 +1261,11 @@
       "doi": "",
       "arxiv": "",
       "url": "https://openreview.net/forum?id=kk8EUOiILZ",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -1020,10 +1283,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2025.3587443",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training",
         "__intro__"
@@ -1042,10 +1306,11 @@
       "doi": "https://doi.org/10.1145/3637528.3671953",
       "arxiv": "",
       "url": "https://doi.org/10.1145/3637528.3671953",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -1063,10 +1328,11 @@
       "doi": "https://doi.org/10.52202/075280-1144",
       "arxiv": "",
       "url": "https://doi.org/10.52202/075280-1144",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training"
       ],
@@ -1084,10 +1350,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2020.3025777",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "__intro__"
       ],
@@ -1105,10 +1372,11 @@
       "doi": "https://doi.org/10.3389/fnins.2023.1135850",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Model Architectures and Pre-Training",
         "__intro__"
@@ -1127,10 +1395,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2020.2994159",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "__intro__"
       ],
@@ -1148,11 +1417,12 @@
       "doi": "https://doi.org/10.1109/TAFFC.2018.2817622",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "model",
-      "clusters": [
-        "transfer",
-        "model"
+      "primary_area": "architectures",
+      "areas": [
+        "generalization",
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Model Architectures and Pre-Training",
@@ -1172,10 +1442,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2606.28202",
       "arxiv": "https://arxiv.org/abs/2606.28202",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1194,10 +1465,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2603.26713",
       "arxiv": "https://arxiv.org/abs/2603.26713",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1216,10 +1488,11 @@
       "doi": "https://doi.org/10.1109/ICASSP55912.2026.11460520",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1237,11 +1510,12 @@
       "doi": "https://doi.org/10.1109/BCI69045.2026.11435036",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "closed-loop"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "applications"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Neuroadaptive Interfaces"
@@ -1260,10 +1534,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2605.22379",
       "arxiv": "https://arxiv.org/abs/2605.22379",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1282,12 +1557,13 @@
       "doi": "https://doi.org/10.48550/arxiv.2606.00884",
       "arxiv": "https://arxiv.org/abs/2606.00884",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "datasets",
-        "model"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "corpora",
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Decoding Targets and Datasets",
         "Distribution Shift and Transfer",
@@ -1308,11 +1584,12 @@
       "doi": "https://doi.org/10.1609/aaai.v40i21.38796",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "model"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Model Architectures and Pre-Training",
@@ -1332,10 +1609,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.07773",
       "arxiv": "https://arxiv.org/abs/2607.07773",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1353,10 +1631,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2603.11119",
       "arxiv": "https://arxiv.org/abs/2603.11119",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1375,10 +1654,11 @@
       "doi": "https://doi.org/10.1109/JBHI.2026.3708734",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1397,10 +1677,11 @@
       "doi": "",
       "arxiv": "https://arxiv.org/abs/2601.08094",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1419,10 +1700,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2607.00358",
       "arxiv": "https://arxiv.org/abs/2607.00358",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1441,11 +1723,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.15278",
       "arxiv": "https://arxiv.org/abs/2606.15278",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "model"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Model Architectures and Pre-Training",
@@ -1465,11 +1748,12 @@
       "doi": "",
       "arxiv": "https://arxiv.org/abs/2601.15615",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "deployment"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "applications"
       ],
+      "tier": "Methods",
       "sections": [
         "Affect Monitoring and Assessment",
         "Distribution Shift and Transfer",
@@ -1490,11 +1774,12 @@
       "doi": "https://doi.org/10.1016/j.eswa.2025.130843",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "datasets",
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "corpora",
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Decoding Targets and Datasets",
         "Distribution Shift and Transfer",
@@ -1514,10 +1799,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2024.3480355",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1535,10 +1821,11 @@
       "doi": "https://doi.org/10.48550/arxiv.2512.23526",
       "arxiv": "https://arxiv.org/abs/2512.23526",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1557,11 +1844,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2509.24860",
       "arxiv": "https://arxiv.org/abs/2509.24860",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "deployment"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "applications"
       ],
+      "tier": "Methods",
       "sections": [
         "Affect Monitoring and Assessment",
         "Distribution Shift and Transfer"
@@ -1580,10 +1868,11 @@
       "doi": "https://doi.org/10.1109/MIND67540.2025.11351599",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1601,11 +1890,12 @@
       "doi": "https://doi.org/10.1109/TNNLS.2022.3225855",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
+      "primary_area": "generalization",
+      "areas": [
         "evaluation",
-        "transfer"
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Evaluation Settings and Leakage"
@@ -1624,11 +1914,12 @@
       "doi": "https://doi.org/10.52202/085713-5515",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "model"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "architectures"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Model Architectures and Pre-Training",
@@ -1649,11 +1940,12 @@
       "doi": "https://doi.org/10.1109/TAFFC.2025.3535542",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
-        "datasets"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
+        "corpora"
       ],
+      "tier": "Methods",
       "sections": [
         "Decoding Targets and Datasets",
         "Distribution Shift and Transfer"
@@ -1672,10 +1964,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2502.16485",
       "arxiv": "https://arxiv.org/abs/2502.16485",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Transfer"
@@ -1694,10 +1987,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2025.3580787",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1715,10 +2009,11 @@
       "doi": "https://doi.org/10.1109/JBHI.2023.3242090",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1736,10 +2031,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2022.3164516",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1757,11 +2053,12 @@
       "doi": "",
       "arxiv": "",
       "url": "https://ceur-ws.org/Vol-3566/paper4.pdf",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer",
+      "primary_area": "generalization",
+      "areas": [
+        "generalization",
         "closed-loop"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "Think: Turning an Estimate into a Proposal"
@@ -1780,10 +2077,11 @@
       "doi": "https://doi.org/10.1109/TAFFC.2022.3210441",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1801,10 +2099,11 @@
       "doi": "https://doi.org/10.1109/TCDS.2020.3007453",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "__intro__"
@@ -1823,10 +2122,11 @@
       "doi": "https://doi.org/10.1016/j.patcog.2020.107626",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1844,10 +2144,11 @@
       "doi": "https://doi.org/10.1016/j.neucom.2020.09.017",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer",
         "__intro__"
@@ -1866,10 +2167,11 @@
       "doi": "https://doi.org/10.1109/TBME.2019.2913914",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "transfer",
-      "clusters": [
-        "transfer"
+      "primary_area": "generalization",
+      "areas": [
+        "generalization"
       ],
+      "tier": "Methods",
       "sections": [
         "Distribution Shift and Transfer"
       ],
@@ -1887,10 +2189,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.08583",
       "arxiv": "https://arxiv.org/abs/2606.08583",
       "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
+      "primary_area": "evaluation",
+      "areas": [
         "evaluation"
       ],
+      "tier": "Validation",
       "sections": [
         "Evaluation Settings and Leakage"
       ],
@@ -1898,27 +2201,6 @@
       "code": "",
       "levels": [],
       "note": "Six of seven foundation models depend on the aperiodic background component."
-    },
-    {
-      "key": "kim2026closed",
-      "title": "Closed-Loop Brain-Computer Interfaces (BCI) Enhanced With AI-Driven Neurofeedback Using Soft Bioelectronic Networks: A Comparative Study With IBRAINTECH and Proposal of a New Hybrid Model",
-      "venue": "International Journal of Grid Computing & Applications",
-      "year": "2026",
-      "type": "article",
-      "doi": "https://doi.org/10.5121/ijgca.2026.17101",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Soft bioelectronic interfaces for closed-loop neurofeedback."
     },
     {
       "key": "suo2026evaluation",
@@ -1929,11 +2211,12 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.27655",
       "arxiv": "https://arxiv.org/abs/2607.27655",
       "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
+      "primary_area": "evaluation",
+      "areas": [
         "evaluation",
-        "deployment"
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Affect Monitoring and Assessment",
         "Evaluation Settings and Leakage"
@@ -1944,69 +2227,6 @@
       "note": "A controlled audit showing how much a favourable split can inflate accuracy."
     },
     {
-      "key": "pham2026cross",
-      "title": "Cross-Subject Intracranial EEG Reconstruction from Scalp Recordings Using Multi-Scale Cross-Attention Transformers",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2605.18897",
-      "arxiv": "https://arxiv.org/abs/2605.18897",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Reconstructing intracranial activity from scalp recordings."
-    },
-    {
-      "key": "zhou2026brain",
-      "title": "Learning from Brain Topography: A Hierarchical Local-Global Graph-Transformer Network for EEG Emotion Recognition",
-      "venue": "arXiv preprint arXiv:2601.10525",
-      "year": "2026",
-      "type": "article",
-      "doi": "https://doi.org/10.48550/arxiv.2601.10525",
-      "arxiv": "https://arxiv.org/abs/2601.10525",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Topography as the structure the model builds on."
-    },
-    {
-      "key": "li2026sa",
-      "title": "SA-HGNN: Sample-Adaptive Hyperbolic Graph Neural Network for EEG-Based Depression Recognition",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2607.02063",
-      "arxiv": "https://arxiv.org/abs/2607.02063",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Hyperbolic geometry for depression recognition."
-    },
-    {
       "key": "hu2026see",
       "title": "See the Emotion: A Facial Emoji Proxy Modeling for EEG Emotion Recognition",
       "venue": "Proceedings of the 43rd International Conference on Machine Learning (ICML)",
@@ -2015,10 +2235,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2607.02912",
       "arxiv": "https://arxiv.org/abs/2607.02912",
       "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
+      "primary_area": "evaluation",
+      "areas": [
         "evaluation"
       ],
+      "tier": "Validation",
       "sections": [
         "Evaluation Settings and Leakage"
       ],
@@ -2036,10 +2257,11 @@
       "doi": "https://doi.org/10.48550/arXiv.2502.17445",
       "arxiv": "https://arxiv.org/abs/2502.17445",
       "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
+      "primary_area": "evaluation",
+      "areas": [
         "evaluation"
       ],
+      "tier": "Validation",
       "sections": [
         "Evaluation Settings and Leakage"
       ],
@@ -2047,623 +2269,6 @@
       "code": "",
       "levels": [],
       "note": "A fuzzy model whose filters are readable by a person."
-    },
-    {
-      "key": "zhang2022visual2eeg",
-      "title": "Visual-to-EEG Cross-Modal Knowledge Distillation for Continuous Emotion Recognition",
-      "venue": "Pattern Recognition",
-      "year": "2022",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.patcog.2022.108833",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Knowledge distilled from visual stimuli into EEG representations."
-    },
-    {
-      "key": "rudin2019explain",
-      "title": "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead",
-      "venue": "Nature Machine Intelligence",
-      "year": "2019",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s42256-019-0048-x",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Evaluation Settings and Leakage",
-        "Target validity"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "The case for perturbing inputs instead of reading saliency maps."
-    },
-    {
-      "key": "woo2017buildingbiomarkers",
-      "title": "Building Better Biomarkers: Brain Models in Translational Neuroimaging",
-      "venue": "Nature Neuroscience",
-      "year": "2017",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/nn.4478",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "closed-loop",
-        "evaluation",
-        "governance"
-      ],
-      "sections": [
-        "Governance",
-        "Target validity",
-        "Think: Turning an Estimate into a Proposal"
-      ],
-      "cite_count": 3,
-      "code": "",
-      "levels": [],
-      "note": "Defines a biomarker backwards from its intended use, the basis of the governance rules."
-    },
-    {
-      "key": "drysdale2017depressionsubtypes",
-      "title": "Resting-state connectivity biomarkers define neurophysiological subtypes of depression",
-      "venue": "Nature Medicine",
-      "year": "2017",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/nm.4246",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "evaluation",
-      "clusters": [
-        "evaluation"
-      ],
-      "sections": [
-        "Target validity"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Resting-state subtypes of depression, and their response to treatment."
-    },
-    {
-      "key": "xie2026harnesssurvey",
-      "title": "A Survey on AI Agent Harness",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.13140/RG.2.2.31393.57447",
-      "arxiv": "",
-      "url": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "__agent_intro__"
-      ],
-      "cite_count": 1,
-      "code": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
-      "levels": [],
-      "note": "The agent harness literature the governance layer is built on."
-    },
-    {
-      "key": "zhou2026brainagent",
-      "title": "BrainAgent: A Large Language Model-Driven Multi-Agent Framework for Autonomous Brain Signal Understanding",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2606.25400",
-      "arxiv": "https://arxiv.org/abs/2606.25400",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Think: Turning an Estimate into a Proposal"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "An LLM-driven multi-agent framework over EEG."
-    },
-    {
-      "key": "xiong2025affective",
-      "title": "Affective Brain Computer InterfaceUsing closed-loop BCI to recognize emotions and solve emotion problems",
-      "venue": "Transactions on Computer Science and Intelligent Systems Research",
-      "year": "2025",
-      "type": "article",
-      "doi": "https://doi.org/10.62051/39m2yk04",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "__applications_intro__",
-        "__intro__"
-      ],
-      "cite_count": 3,
-      "code": "",
-      "levels": [],
-      "note": "A closed-loop BCI that recognises affect and responds in kind."
-    },
-    {
-      "key": "duraisamy2025adaptive",
-      "title": "An Adaptive Brain-Computer Interface Game with Blink Controls and Cognitive State Monitoring",
-      "venue": "Companion Proceedings of the 30th International Conference on Intelligent User Interfaces",
-      "year": "2025",
-      "type": "inproceedings",
-      "doi": "https://doi.org/10.1145/3708557.3716365",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "How Action Changes Later Data",
-        "Neuroadaptive Interfaces"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "An adaptive game where the interface follows the user's state."
-    },
-    {
-      "key": "herbuela2025realtime",
-      "title": "Realtime Multimodal Emotion Estimation using Behavioral and Neurophysiological Data",
-      "venue": "Proceedings of the 27th International Conference on Multimodal Interaction (ICMI)",
-      "year": "2025",
-      "type": "inproceedings",
-      "doi": "https://doi.org/10.1145/3716553.3757092",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Neuroadaptive Interfaces",
-        "__intro__"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "Real-time multimodal estimation, behaviour alongside the signal."
-    },
-    {
-      "key": "willett2023speech",
-      "title": "A High-Performance Speech Neuroprosthesis",
-      "venue": "Nature",
-      "year": "2023",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s41586-023-06377-x",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Who Controls the Action"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "62 words per minute from a speech neuroprosthesis."
-    },
-    {
-      "key": "moses2021neuroprosthesis",
-      "title": "Neuroprosthesis for Decoding Speech in a Paralyzed Person with Anarthria",
-      "venue": "New England Journal of Medicine",
-      "year": "2021",
-      "type": "article",
-      "doi": "https://doi.org/10.1056/NEJMoa2027540",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Who Controls the Action"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Speech decoded in a person who cannot speak."
-    },
-    {
-      "key": "zotev2020simultaneous",
-      "title": "Effects of simultaneous real-time fMRI and EEG neurofeedback in major depressive disorder evaluated with brain electromagnetic tomography",
-      "venue": "NeuroImage: Clinical",
-      "year": "2020",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.nicl.2020.102459",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Neurofeedback and Self-Regulation",
-        "__intro__"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "Simultaneous fMRI and EEG neurofeedback, and what each adds."
-    },
-    {
-      "key": "zich2020modulatory",
-      "title": "Modulatory effects of dynamic fMRI-based neurofeedback on emotion regulation networks in adolescent females",
-      "venue": "NeuroImage",
-      "year": "2020",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.neuroimage.2020.117053",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop"
-      ],
-      "sections": [
-        "Neurofeedback and Self-Regulation"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Modulatory connectivity as a control signal for emotion regulation."
-    },
-    {
-      "key": "shanechi2019brain",
-      "title": "Brain–machine interfaces from motor to mood",
-      "venue": "Nature Neuroscience",
-      "year": "2019",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s41593-019-0488-y",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop",
-        "deployment"
-      ],
-      "sections": [
-        "Responsive Neuromodulation",
-        "Who Controls the Action"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "From motor control to mood: what brain-machine interfaces could reach."
-    },
-    {
-      "key": "sitaram2017neurofeedback",
-      "title": "Closed-Loop Brain Training: The Science of Neurofeedback",
-      "venue": "Nature Reviews Neuroscience",
-      "year": "2017",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/nrn.2016.164",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop",
-        "maturity"
-      ],
-      "sections": [
-        "Demonstrated benefit",
-        "Neurofeedback and Self-Regulation"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "Why contingency decides whether a neurofeedback result means anything."
-    },
-    {
-      "key": "debettencourt2015",
-      "title": "Closed-Loop Training of Attention with Real-Time Brain Imaging",
-      "venue": "Nature Neuroscience",
-      "year": "2015",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/nn.3940",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "closed-loop",
-      "clusters": [
-        "closed-loop",
-        "maturity"
-      ],
-      "sections": [
-        "Demonstrated benefit",
-        "Neurofeedback and Self-Regulation"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "Yoked and no-feedback conditions, the controls that separate signal from response."
-    },
-    {
-      "key": "zhou2026eegdancer",
-      "title": "EEGDancer: Dynamic Emotion Latent Space Masked Modeling with Reinforcement Learning for EEG Continuous Emotion Prediction",
-      "venue": "arXiv preprint arXiv:2606.05855",
-      "year": "2026",
-      "type": "article",
-      "doi": "https://doi.org/10.48550/arxiv.2606.05855",
-      "arxiv": "https://arxiv.org/abs/2606.05855",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Real-time operation"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Dynamic emotion latent space with masked modelling."
-    },
-    {
-      "key": "djibrina2026energy",
-      "title": "Energy Landscapes of Emotion: Quantifying Brain Network Stability During Happy and Sad Face Processing Using EEG-Based Hopfield Energy",
-      "venue": "arXiv preprint arXiv:2603.27644",
-      "year": "2026",
-      "type": "article",
-      "doi": "https://doi.org/10.48550/arxiv.2603.27644",
-      "arxiv": "https://arxiv.org/abs/2603.27644",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Real-time operation"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Emotion as the stability of a network, rather than a label."
-    },
-    {
-      "key": "he2026i",
-      "title": "I 2RiMA: Spectral Riemannian Representation with Temporal Attention for Mental Stress Detection based on EEG Signals",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2607.01279",
-      "arxiv": "https://arxiv.org/abs/2607.01279",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Spectral Riemannian representations with temporal attention."
-    },
-    {
-      "key": "kabotyanski2026intracranial",
-      "title": "Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review",
-      "venue": "Biological Psychiatry",
-      "year": "2026",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.biopsych.2025.10.005",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "transfer",
-        "closed-loop",
-        "deployment",
-        "evaluation"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment",
-        "Distribution Shift and Transfer",
-        "How Action Changes Later Data",
-        "Real-time operation",
-        "Target validity",
-        "__intro__"
-      ],
-      "cite_count": 6,
-      "code": "",
-      "levels": [],
-      "note": "Which intracranial biomarkers could actually guide stimulation."
-    },
-    {
-      "key": "pan2026arousal",
-      "title": "Toward Annotation-Efficient Continuous Emotion Arousal Quantification via Group-Level EEG Dynamic Neural Synchrony",
-      "venue": "",
-      "year": "2026",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2607.28204",
-      "arxiv": "https://arxiv.org/abs/2607.28204",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Annotation-efficient continuous arousal estimation."
-    },
-    {
-      "key": "nassibi2025systematic",
-      "title": "A Systematic Review of EEG-based Machine Intelligence Algorithms for Depression Diagnosis, and Monitoring",
-      "venue": "",
-      "year": "2025",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2503.19820",
-      "arxiv": "https://arxiv.org/abs/2503.19820",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment",
-        "__intro__"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "A map of the diagnostic EEG literature for affective states."
-    },
-    {
-      "key": "hazra2025bridging",
-      "title": "Bridging Accuracy and Explainability in EEG-based Graph Attention Network for Depression Detection",
-      "venue": "",
-      "year": "2025",
-      "type": "misc",
-      "doi": "https://doi.org/10.48550/arXiv.2511.05537",
-      "arxiv": "https://arxiv.org/abs/2511.05537",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Accuracy and explainability held together rather than traded off."
-    },
-    {
-      "key": "kwok2025fairness",
-      "title": "Machine Learning Fairness for Depression Detection using EEG Data",
-      "venue": "2025 IEEE 22nd International Symposium on Biomedical Imaging (ISBI)",
-      "year": "2025",
-      "type": "inproceedings",
-      "doi": "https://doi.org/10.1109/ISBI60581.2025.10980986",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment",
-        "governance"
-      ],
-      "sections": [
-        "Affect Monitoring and Assessment",
-        "Governance"
-      ],
-      "cite_count": 2,
-      "code": "",
-      "levels": [],
-      "note": "A fairness audit across EEG depression datasets, and the subgroup gap it finds."
-    },
-    {
-      "key": "yik2025neurobench",
-      "title": "The NeuroBench Framework for Benchmarking Neuromorphic Computing Algorithms and Systems",
-      "venue": "Nature Communications",
-      "year": "2025",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s41467-025-56739-4",
-      "arxiv": "",
-      "url": "https://doi.org/10.1038/s41467-025-56739-4",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Real-time operation"
-      ],
-      "cite_count": 1,
-      "code": "https://github.com/lava-nc/lava",
-      "levels": [],
-      "note": "A benchmark framework for neuromorphic computing."
-    },
-    {
-      "key": "oganesian2024brain",
-      "title": "Brain–computer interfaces for neuropsychiatric disorders",
-      "venue": "Nature Reviews Bioengineering",
-      "year": "2024",
-      "type": "article",
-      "doi": "https://doi.org/10.1038/s44222-024-00177-2",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment",
-        "maturity"
-      ],
-      "sections": [
-        "Demonstrated benefit",
-        "Responsive Neuromodulation",
-        "__intro__"
-      ],
-      "cite_count": 3,
-      "code": "",
-      "levels": [],
-      "note": "A review of BCIs for neuropsychiatric disorders."
-    },
-    {
-      "key": "rao2018direct",
-      "title": "Direct Electrical Stimulation of Lateral Orbitofrontal Cortex Acutely Improves Mood in Individuals with Symptoms of Depression",
-      "venue": "Current Biology",
-      "year": "2018",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.cub.2018.10.026",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Responsive Neuromodulation"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Open-loop stimulation, which can identify a target but not test biomarker timing."
-    },
-    {
-      "key": "lozano2013",
-      "title": "Probing and Regulating Dysfunctional Circuits Using Deep Brain Stimulation",
-      "venue": "Neuron",
-      "year": "2013",
-      "type": "article",
-      "doi": "https://doi.org/10.1016/j.neuron.2013.01.020",
-      "arxiv": "",
-      "url": "",
-      "primary_cluster": "deployment",
-      "clusters": [
-        "deployment"
-      ],
-      "sections": [
-        "Responsive Neuromodulation"
-      ],
-      "cite_count": 1,
-      "code": "",
-      "levels": [],
-      "note": "Deep brain stimulation guided by a functional circuit model."
     },
     {
       "key": "monroydcroz2026minimalist",
@@ -2674,11 +2279,13 @@
       "doi": "https://doi.org/10.48550/arXiv.2606.01473",
       "arxiv": "https://arxiv.org/abs/2606.01473",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
+        "applications",
         "closed-loop"
       ],
+      "tier": "Validation",
       "sections": [
         "Act: Controlling What Reaches the User",
         "How Action Changes Later Data",
@@ -2701,13 +2308,15 @@
       "doi": "https://doi.org/10.1038/s43588-026-01021-w",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "datasets",
-        "model",
-        "deployment"
+        "signal",
+        "corpora",
+        "architectures",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Acquisition Modalities",
         "Affect Monitoring and Assessment",
@@ -2732,11 +2341,13 @@
       "doi": "https://doi.org/10.48550/arXiv.2605.01235",
       "arxiv": "https://arxiv.org/abs/2605.01235",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop"
+        "closed-loop",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Act: Controlling What Reaches the User",
         "Neuroadaptive Interfaces",
@@ -2760,11 +2371,13 @@
       "doi": "https://doi.org/10.48550/arXiv.2602.10552",
       "arxiv": "https://arxiv.org/abs/2602.10552",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop"
+        "closed-loop",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Act: Controlling What Reaches the User",
         "Neuroadaptive Interfaces",
@@ -2787,12 +2400,13 @@
       "doi": "",
       "arxiv": "https://arxiv.org/abs/2603.03212",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop",
+        "applications",
         "governance"
       ],
+      "tier": "Validation",
       "sections": [
         "Governance",
         "Neuroadaptive Interfaces",
@@ -2815,12 +2429,13 @@
       "doi": "https://doi.org/10.1109/VR59515.2025.00088",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop",
-        "datasets"
+        "applications",
+        "signal"
       ],
+      "tier": "Validation",
       "sections": [
         "Acquisition Modalities",
         "Neuroadaptive Interfaces",
@@ -2844,11 +2459,12 @@
       "doi": "https://doi.org/10.1145/3719160.3736623",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop"
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Neuroadaptive Interfaces",
         "Neurofeedback and Self-Regulation",
@@ -2863,6 +2479,31 @@
       "note": "Engagement-adaptive dialogue, where adaptation changed the measure but not learning."
     },
     {
+      "key": "oganesian2024brain",
+      "title": "Brain–computer interfaces for neuropsychiatric disorders",
+      "venue": "Nature Reviews Bioengineering",
+      "year": "2024",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s44222-024-00177-2",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "maturity",
+      "areas": [
+        "applications",
+        "maturity"
+      ],
+      "tier": "Validation",
+      "sections": [
+        "Demonstrated benefit",
+        "Responsive Neuromodulation",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "A review of BCIs for neuropsychiatric disorders."
+    },
+    {
       "key": "gill2023pilot",
       "title": "A pilot study of closed-loop neuromodulation for treatment-resistant post-traumatic stress disorder",
       "venue": "Nature Communications",
@@ -2871,12 +2512,13 @@
       "doi": "https://doi.org/10.1038/s41467-023-38712-1",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
         "closed-loop",
-        "deployment"
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Act: Controlling What Reaches the User",
         "Neurofeedback and Self-Regulation",
@@ -2899,13 +2541,13 @@
       "doi": "https://doi.org/10.1038/s41586-023-06541-3",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "datasets",
-        "deployment",
-        "evaluation"
+        "corpora",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Affect Monitoring and Assessment",
         "Decoding Targets and Datasets",
@@ -2929,13 +2571,13 @@
       "doi": "https://doi.org/10.1016/j.biopsych.2023.01.020",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "datasets",
-        "deployment",
-        "evaluation"
+        "corpora",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Affect Monitoring and Assessment",
         "Decoding Targets and Datasets",
@@ -2958,13 +2600,14 @@
       "doi": "https://doi.org/10.1016/j.neuroimage.2023.120320",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop",
-        "datasets",
-        "evaluation"
+        "applications",
+        "signal",
+        "corpora"
       ],
+      "tier": "Validation",
       "sections": [
         "Acquisition Modalities",
         "Neurofeedback and Self-Regulation",
@@ -2988,11 +2631,12 @@
       "doi": "https://doi.org/10.1109/TAFFC.2021.3134183",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "closed-loop"
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Neurofeedback and Self-Regulation",
         "Pilot: testing the interaction"
@@ -3013,14 +2657,16 @@
       "doi": "https://doi.org/10.1038/s41562-022-01310-0",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "datasets",
+        "signal",
+        "corpora",
         "evaluation",
-        "transfer",
-        "deployment"
+        "generalization",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Acquisition Modalities",
         "Affect Monitoring and Assessment",
@@ -3045,13 +2691,14 @@
       "doi": "https://doi.org/10.1038/s41591-021-01480-w",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "model",
+        "architectures",
         "closed-loop",
-        "deployment"
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Act: Controlling What Reaches the User",
         "Model Architectures and Pre-Training",
@@ -3075,12 +2722,14 @@
       "doi": "https://doi.org/10.1038/nbt.4200",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity",
-        "datasets",
-        "deployment"
+        "signal",
+        "corpora",
+        "applications"
       ],
+      "tier": "Validation",
       "sections": [
         "Acquisition Modalities",
         "Affect Monitoring and Assessment",
@@ -3096,6 +2745,30 @@
       "note": "Multiday intracranial mood tracking, the basis for the Lab level."
     },
     {
+      "key": "sitaram2017neurofeedback",
+      "title": "Closed-Loop Brain Training: The Science of Neurofeedback",
+      "venue": "Nature Reviews Neuroscience",
+      "year": "2017",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nrn.2016.164",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "maturity",
+      "areas": [
+        "applications",
+        "maturity"
+      ],
+      "tier": "Validation",
+      "sections": [
+        "Demonstrated benefit",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Why contingency decides whether a neurofeedback result means anything."
+    },
+    {
       "key": "chaudhary2016bci",
       "title": "Brain-computer interfaces for communication and rehabilitation",
       "venue": "Nature Reviews Neurology",
@@ -3104,10 +2777,11 @@
       "doi": "https://doi.org/10.1038/nrneurol.2016.113",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "maturity",
-      "clusters": [
+      "primary_area": "maturity",
+      "areas": [
         "maturity"
       ],
+      "tier": "Validation",
       "sections": [
         "__applications_intro__",
         "__intro__"
@@ -3118,6 +2792,510 @@
       "note": "The clinical landscape of BCIs for communication and rehabilitation."
     },
     {
+      "key": "debettencourt2015",
+      "title": "Closed-Loop Training of Attention with Real-Time Brain Imaging",
+      "venue": "Nature Neuroscience",
+      "year": "2015",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/nn.3940",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "maturity",
+      "areas": [
+        "applications",
+        "maturity"
+      ],
+      "tier": "Validation",
+      "sections": [
+        "Demonstrated benefit",
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Yoked and no-feedback conditions, the controls that separate signal from response."
+    },
+    {
+      "key": "xie2026harnesssurvey",
+      "title": "A Survey on AI Agent Harness",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.13140/RG.2.2.31393.57447",
+      "arxiv": "",
+      "url": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "__agent_intro__"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/HKUST-KnowComp/Awesome-Agent-Harness",
+      "levels": [],
+      "note": "The agent harness literature the governance layer is built on."
+    },
+    {
+      "key": "zhou2026brainagent",
+      "title": "BrainAgent: A Large Language Model-Driven Multi-Agent Framework for Autonomous Brain Signal Understanding",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2606.25400",
+      "arxiv": "https://arxiv.org/abs/2606.25400",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Think: Turning an Estimate into a Proposal"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "An LLM-driven multi-agent framework over EEG."
+    },
+    {
+      "key": "zhou2026eegdancer",
+      "title": "EEGDancer: Dynamic Emotion Latent Space Masked Modeling with Reinforcement Learning for EEG Continuous Emotion Prediction",
+      "venue": "arXiv preprint arXiv:2606.05855",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2606.05855",
+      "arxiv": "https://arxiv.org/abs/2606.05855",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Dynamic emotion latent space with masked modelling."
+    },
+    {
+      "key": "djibrina2026energy",
+      "title": "Energy Landscapes of Emotion: Quantifying Brain Network Stability During Happy and Sad Face Processing Using EEG-Based Hopfield Energy",
+      "venue": "arXiv preprint arXiv:2603.27644",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.48550/arxiv.2603.27644",
+      "arxiv": "https://arxiv.org/abs/2603.27644",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Emotion as the stability of a network, rather than a label."
+    },
+    {
+      "key": "kabotyanski2026intracranial",
+      "title": "Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review",
+      "venue": "Biological Psychiatry",
+      "year": "2026",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.biopsych.2025.10.005",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "generalization",
+        "closed-loop",
+        "applications",
+        "corpora"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Distribution Shift and Transfer",
+        "How Action Changes Later Data",
+        "Real-time operation",
+        "Target validity",
+        "__intro__"
+      ],
+      "cite_count": 6,
+      "code": "",
+      "levels": [],
+      "note": "Which intracranial biomarkers could actually guide stimulation."
+    },
+    {
+      "key": "xiong2025affective",
+      "title": "Affective Brain Computer InterfaceUsing closed-loop BCI to recognize emotions and solve emotion problems",
+      "venue": "Transactions on Computer Science and Intelligent Systems Research",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.62051/39m2yk04",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "__applications_intro__",
+        "__intro__"
+      ],
+      "cite_count": 3,
+      "code": "",
+      "levels": [],
+      "note": "A closed-loop BCI that recognises affect and responds in kind."
+    },
+    {
+      "key": "duraisamy2025adaptive",
+      "title": "An Adaptive Brain-Computer Interface Game with Blink Controls and Cognitive State Monitoring",
+      "venue": "Companion Proceedings of the 30th International Conference on Intelligent User Interfaces",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3708557.3716365",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop",
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "How Action Changes Later Data",
+        "Neuroadaptive Interfaces"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "An adaptive game where the interface follows the user's state."
+    },
+    {
+      "key": "yik2025neurobench",
+      "title": "The NeuroBench Framework for Benchmarking Neuromorphic Computing Algorithms and Systems",
+      "venue": "Nature Communications",
+      "year": "2025",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41467-025-56739-4",
+      "arxiv": "",
+      "url": "https://doi.org/10.1038/s41467-025-56739-4",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Real-time operation"
+      ],
+      "cite_count": 1,
+      "code": "https://github.com/lava-nc/lava",
+      "levels": [],
+      "note": "A benchmark framework for neuromorphic computing."
+    },
+    {
+      "key": "willett2023speech",
+      "title": "A High-Performance Speech Neuroprosthesis",
+      "venue": "Nature",
+      "year": "2023",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41586-023-06377-x",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Who Controls the Action"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "62 words per minute from a speech neuroprosthesis."
+    },
+    {
+      "key": "moses2021neuroprosthesis",
+      "title": "Neuroprosthesis for Decoding Speech in a Paralyzed Person with Anarthria",
+      "venue": "New England Journal of Medicine",
+      "year": "2021",
+      "type": "article",
+      "doi": "https://doi.org/10.1056/NEJMoa2027540",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Who Controls the Action"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Speech decoded in a person who cannot speak."
+    },
+    {
+      "key": "shanechi2019brain",
+      "title": "Brain–machine interfaces from motor to mood",
+      "venue": "Nature Neuroscience",
+      "year": "2019",
+      "type": "article",
+      "doi": "https://doi.org/10.1038/s41593-019-0488-y",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "closed-loop",
+      "areas": [
+        "closed-loop",
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Responsive Neuromodulation",
+        "Who Controls the Action"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "From motor control to mood: what brain-machine interfaces could reach."
+    },
+    {
+      "key": "he2026i",
+      "title": "I 2RiMA: Spectral Riemannian Representation with Temporal Attention for Mental Stress Detection based on EEG Signals",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.01279",
+      "arxiv": "https://arxiv.org/abs/2607.01279",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Spectral Riemannian representations with temporal attention."
+    },
+    {
+      "key": "pan2026arousal",
+      "title": "Toward Annotation-Efficient Continuous Emotion Arousal Quantification via Group-Level EEG Dynamic Neural Synchrony",
+      "venue": "",
+      "year": "2026",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2607.28204",
+      "arxiv": "https://arxiv.org/abs/2607.28204",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Annotation-efficient continuous arousal estimation."
+    },
+    {
+      "key": "nassibi2025systematic",
+      "title": "A Systematic Review of EEG-based Machine Intelligence Algorithms for Depression Diagnosis, and Monitoring",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2503.19820",
+      "arxiv": "https://arxiv.org/abs/2503.19820",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A map of the diagnostic EEG literature for affective states."
+    },
+    {
+      "key": "hazra2025bridging",
+      "title": "Bridging Accuracy and Explainability in EEG-based Graph Attention Network for Depression Detection",
+      "venue": "",
+      "year": "2025",
+      "type": "misc",
+      "doi": "https://doi.org/10.48550/arXiv.2511.05537",
+      "arxiv": "https://arxiv.org/abs/2511.05537",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Accuracy and explainability held together rather than traded off."
+    },
+    {
+      "key": "kwok2025fairness",
+      "title": "Machine Learning Fairness for Depression Detection using EEG Data",
+      "venue": "2025 IEEE 22nd International Symposium on Biomedical Imaging (ISBI)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1109/ISBI60581.2025.10980986",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications",
+        "governance"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Affect Monitoring and Assessment",
+        "Governance"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "A fairness audit across EEG depression datasets, and the subgroup gap it finds."
+    },
+    {
+      "key": "herbuela2025realtime",
+      "title": "Realtime Multimodal Emotion Estimation using Behavioral and Neurophysiological Data",
+      "venue": "Proceedings of the 27th International Conference on Multimodal Interaction (ICMI)",
+      "year": "2025",
+      "type": "inproceedings",
+      "doi": "https://doi.org/10.1145/3716553.3757092",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Neuroadaptive Interfaces",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Real-time multimodal estimation, behaviour alongside the signal."
+    },
+    {
+      "key": "zotev2020simultaneous",
+      "title": "Effects of simultaneous real-time fMRI and EEG neurofeedback in major depressive disorder evaluated with brain electromagnetic tomography",
+      "venue": "NeuroImage: Clinical",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.nicl.2020.102459",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Neurofeedback and Self-Regulation",
+        "__intro__"
+      ],
+      "cite_count": 2,
+      "code": "",
+      "levels": [],
+      "note": "Simultaneous fMRI and EEG neurofeedback, and what each adds."
+    },
+    {
+      "key": "zich2020modulatory",
+      "title": "Modulatory effects of dynamic fMRI-based neurofeedback on emotion regulation networks in adolescent females",
+      "venue": "NeuroImage",
+      "year": "2020",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neuroimage.2020.117053",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Neurofeedback and Self-Regulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Modulatory connectivity as a control signal for emotion regulation."
+    },
+    {
+      "key": "rao2018direct",
+      "title": "Direct Electrical Stimulation of Lateral Orbitofrontal Cortex Acutely Improves Mood in Individuals with Symptoms of Depression",
+      "venue": "Current Biology",
+      "year": "2018",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.cub.2018.10.026",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Open-loop stimulation, which can identify a target but not test biomarker timing."
+    },
+    {
+      "key": "lozano2013",
+      "title": "Probing and Regulating Dysfunctional Circuits Using Deep Brain Stimulation",
+      "venue": "Neuron",
+      "year": "2013",
+      "type": "article",
+      "doi": "https://doi.org/10.1016/j.neuron.2013.01.020",
+      "arxiv": "",
+      "url": "",
+      "primary_area": "applications",
+      "areas": [
+        "applications"
+      ],
+      "tier": "Systems",
+      "sections": [
+        "Responsive Neuromodulation"
+      ],
+      "cite_count": 1,
+      "code": "",
+      "levels": [],
+      "note": "Deep brain stimulation guided by a functional circuit model."
+    },
+    {
       "key": "li2025neuraldiffuser",
       "title": "NeuralDiffuser: Neuroscience-Inspired Diffusion Guidance for fMRI Visual Reconstruction",
       "venue": "IEEE Transactions on Image Processing",
@@ -3126,10 +3304,11 @@
       "doi": "https://doi.org/10.1109/TIP.2025.3526051",
       "arxiv": "",
       "url": "https://doi.org/10.1109/TIP.2025.3526051",
-      "primary_cluster": "governance",
-      "clusters": [
+      "primary_area": "governance",
+      "areas": [
         "governance"
       ],
+      "tier": "Boundaries",
       "sections": [
         "Governance"
       ],
@@ -3147,10 +3326,11 @@
       "doi": "https://doi.org/10.1007/s11948-019-00087-2",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "governance",
-      "clusters": [
+      "primary_area": "governance",
+      "areas": [
         "governance"
       ],
+      "tier": "Boundaries",
       "sections": [
         "Governance"
       ],
@@ -3168,10 +3348,11 @@
       "doi": "https://doi.org/10.1038/551159a",
       "arxiv": "",
       "url": "",
-      "primary_cluster": "governance",
-      "clusters": [
+      "primary_area": "governance",
+      "areas": [
         "governance"
       ],
+      "tier": "Boundaries",
       "sections": [
         "Governance"
       ],

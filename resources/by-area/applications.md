@@ -4,7 +4,10 @@
 
 Four families of system, and what each does with an estimate once it has it.
 
-Monitoring estimates a state and stops, neurofeedback hands it to the person, neuroadaptive interfaces change the environment, and responsive neuromodulation changes the brain state directly. The four families do not share an evaluation, so a result from one is not evidence for another.
+Monitoring estimates a state and stops, neurofeedback hands it to the
+person, neuroadaptive interfaces change the environment, and responsive
+neuromodulation changes the brain state directly. The four families do not
+share an evaluation, so a result from one is not evidence for another.
 
 **39 references** are listed here; 10 of them are filed primarily under this area.
 
@@ -59,8 +62,8 @@ Monitoring estimates a state and stops, neurofeedback hands it to the person, ne
 | [Direct Electrical Stimulation of Lateral Orbitofrontal Cortex Acutely Improves Mood in Individuals with Symptoms of Depression](https://doi.org/10.1016/j.cub.2018.10.026) | 2018 | Current Biology | Open-loop stimulation, which can identify a target but not test biomarker timing. | [DOI](https://doi.org/10.1016/j.cub.2018.10.026) |
 | [Probing and Regulating Dysfunctional Circuits Using Deep Brain Stimulation](https://doi.org/10.1016/j.neuron.2013.01.020) | 2013 | Neuron | Deep brain stimulation guided by a functional circuit model. | [DOI](https://doi.org/10.1016/j.neuron.2013.01.020) |
 
----
+## Elsewhere in the Systems tier
 
-**Also in the Systems tier:** [Closed-Loop Systems](closed-loop.md).
+**[Closed-Loop Systems](closed-loop.md)** — Sense proposes, Act decides, a harness keeps the system inside what was tested.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

@@ -4,7 +4,10 @@
 
 A neural recording reveals more than the purpose it was collected for.
 
-Consent to record a signal does not authorise later inference from it, and an adaptive system needs a stated boundary before it reaches one. The risk is not only that a recording leaks, but that a system built for one purpose quietly acquires another.
+Consent to record a signal does not authorise later inference from it, and
+an adaptive system needs a stated boundary before it reaches one. The risk
+is not only that a recording leaks, but that a system built for one purpose
+quietly acquires another.
 
 **7 references** are listed here; 3 of them are filed primarily under this area.
 
@@ -27,8 +30,8 @@ Consent to record a signal does not authorise later inference from it, and an ad
 | [Wired Emotions: Ethical Issues of Affective Brain-Computer Interfaces](https://doi.org/10.1007/s11948-019-00087-2) | 2020 | Science and Engineering Ethics | What a neural recording reveals beyond the purpose it was collected for. | [DOI](https://doi.org/10.1007/s11948-019-00087-2) |
 | [Four ethical priorities for neurotechnologies and AI](https://doi.org/10.1038/551159a) | 2017 | Nature | Four priorities for neurotechnology, including data sharing. | [DOI](https://doi.org/10.1038/551159a) |
 
----
+## Elsewhere in the Boundaries tier
 
-This is the only area in the Boundaries tier.
+This is the only area in the Boundaries tier, and the last thing a reader has to settle before any of the work runs.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

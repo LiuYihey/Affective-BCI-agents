@@ -4,7 +4,12 @@
 
 Why a measurable proxy stands in for emotion, and what it then means.
 
-Emotion cannot be observed directly, so every study uses a measurable proxy as its target. A stimulus-elicited target is assigned by the experimenter, a self-reported target comes from the participant, and an expression-observed target is read from behaviour. The three are related but not interchangeable, and a model trained on one can succeed by recognising the clip rather than the state.
+Emotion cannot be observed directly, so every study uses a measurable proxy
+as its target. A stimulus-elicited target is assigned by the experimenter, a
+self-reported target comes from the participant, and an expression-observed
+target is read from behaviour. The three are related but not
+interchangeable, and a model trained on one can succeed by recognising the
+clip rather than the state.
 
 **33 references** are listed here; 23 of them are filed primarily under this area.
 
@@ -53,8 +58,8 @@ Emotion cannot be observed directly, so every study uses a measurable proxy as i
 | [Mood variations decoded from multi-site intracranial human brain activity](https://doi.org/10.1038/nbt.4200) | 2018 | Nature Biotechnology | Multiday intracranial mood tracking, the basis for the Lab level. | [DOI](https://doi.org/10.1038/nbt.4200) |
 | [Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review](https://doi.org/10.1016/j.biopsych.2025.10.005) | 2026 | Biological Psychiatry | Which intracranial biomarkers could actually guide stimulation. | [DOI](https://doi.org/10.1016/j.biopsych.2025.10.005) |
 
----
+## Elsewhere in the Foundations tier
 
-**Also in the Foundations tier:** [Signal Acquisition & Quality](signal.md).
+**[Signal Acquisition & Quality](signal.md)** — What the recording measures, and how much of it can be trusted.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

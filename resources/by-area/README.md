@@ -46,6 +46,6 @@ What has to be settled before any of it runs.
 |:--|--:|:--|
 | [Governance & Ethics](governance.md) | 7 | A neural recording reveals more than the purpose it was collected for |
 
----
+## Elsewhere
 
-Back to the [resource index](../README.md) · [all references in one table](../papers.md).
+Back to the [resource index](../README.md) · [all references in one table](../papers.md) · [the corpus list](../corpora.md).

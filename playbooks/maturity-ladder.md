@@ -6,7 +6,7 @@ Level 3 one.
 
 <img src="../assets/figures/levels.png" width="100%" alt="Lab, Pilot and Field: what each maturity level tests">
 
----
+<p align="center"><sub><b>Lab · Pilot · Field</b> — what each level of evidence tests.</sub></p>
 
 | Level | The question it answers | Typical duration | The claim it licenses |
 |---|---|---|---|
@@ -16,8 +16,6 @@ Level 3 one.
 
 A Level 1 result cannot support a Level 3 claim. The gap between them is not
 a matter of sample size — it is a matter of what the system is allowed to do.
-
----
 
 ## Level 1 · Lab
 
@@ -42,8 +40,6 @@ a matter of sample size — it is a matter of what the system is allowed to do.
 subject-informed split, and it is presented as evidence that the system
 detects the state in the user's own setting.
 → See [Evaluation & Leakage Control](../resources/by-area/evaluation.md)
-
----
 
 ## Level 2 · Pilot
 
@@ -86,8 +82,6 @@ controls become essential rather than optional.
 > second experiment removed the neural input. These are documented in
 > [Evidence Maturity](../resources/by-area/maturity.md).
 
----
-
 ## Level 3 · Field
 
 > Does the whole system hold up where it is actually used?
@@ -115,32 +109,19 @@ controls become essential rather than optional.
 outside the lab, while the analysis is still a Level 1 accuracy on
 laboratory data.
 
----
-
 ## The reviewer's question
 
 When reviewing a pilot system, ask which level each claim in the paper
 belongs to, then check the gap:
 
-```
-Claim in the paper        Level claimed    Evidence present    Gap
-─────────────────────────────────────────────────────────────────────
-"The signal contains      Lab              cross-subject      none
- information about
- affect"
-
-"The system improves     Pilot            yoked control,      outcome measure
- emotion regulation"                     significance        missing
-
-"The approach is ready    Field            6-week study,       comparison
- for clinical use"                       20 patients,        missing
-                                          no control
-```
+| Claim in the paper | Level claimed | Evidence present | Gap |
+|:--|:--|:--|:--|
+| "The signal contains information about affect" | Lab | cross-subject | none |
+| "The system improves emotion regulation" | Pilot | yoked control, significance | outcome measure missing |
+| "The approach is ready for clinical use" | Field | 6-week study, 20 patients, no control | comparison missing |
 
 Most papers that overclaim are not wrong about Level 1. They are silent
 about Levels 2 and 3, and the abstract collapses the difference.
-
----
 
 ## Related
 

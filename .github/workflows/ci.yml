@@ -54,3 +54,16 @@ jobs:
       # the committed output still agrees with itself.
       - name: Check the index agrees with itself
         run: python scripts/check_index.py
+
+  layout:
+    name: Page layout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # GitHub draws a rule under every h2, so a page that also puts one
+      # above the heading reads as two separators. This keeps that fixed.
+      - name: Check the pages follow the layout conventions
+        run: python scripts/check_layout.py

@@ -39,10 +39,25 @@ python scripts/check_index.py         # the index agrees with itself
 python scripts/check_citations.py      # prose citations match the index
 python scripts/check_relative_links.py # relative paths point at real files
 python scripts/check_links.py          # every link still resolves
+python scripts/check_layout.py        # the pages follow the layout conventions
 ```
 
-All four run in CI on every push, so a pull request that breaks any of them
+All five run in CI on every push, so a pull request that breaks any of them
 fails the build rather than landing broken.
+
+## Page layout
+
+GitHub draws a rule under every second-level heading. A page that also puts a
+`---` above the heading therefore shows two rules and reads as two separators,
+so the convention here is to let the heading draw the rule and to use `---`
+only between blocks of prose. `check_layout.py` enforces this.
+
+Figures are followed by a centred caption in small text, so a reader can tell
+what a figure is without reading the paragraph under it:
+
+```
+<p align="center"><sub><b>Title</b> — one clause on what the figure shows.</sub></p>
+```
 
 ## Changing the taxonomy
 

@@ -50,7 +50,7 @@
     },
     "evaluation": {
       "title": "Evaluation & Leakage Control",
-      "summary": "The test split decides which question an accuracy answers. A favourable split or repeated access to the test set can beat a better architecture, and a model can reach a high score by reading a spectral confound rather than the variable of interest.",
+      "summary": "The test split decides which question an accuracy answers, and a model can reach a high score by reading a spectral confound rather than the variable of interest. Reporting the split, the held-out unit, and the controls against leakage is the minimum for a number to mean anything.",
       "aspects": [
         "Split protocols and split unit",
         "Leakage from windows and sessions",

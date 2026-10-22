@@ -4,7 +4,10 @@
 
 Lab estimates the state; Pilot changes something; Field holds up over time.
 
-A result supports a claim only at the level whose evidence it actually provides, and the evidence for a level has to be gathered at that level. Missing controls and undefined outcome measures are what separate one level from the next.
+A result supports a claim only at the level whose evidence it actually
+provides, and the evidence for a level has to be gathered at that level.
+Missing controls and undefined outcome measures are what separate one level
+from the next.
 
 **19 references** are listed here; 19 of them are filed primarily under this area.
 
@@ -39,8 +42,8 @@ A result supports a claim only at the level whose evidence it actually provides,
 | [Brain-computer interfaces for communication and rehabilitation](https://doi.org/10.1038/nrneurol.2016.113) | 2016 | Nature Reviews Neurology | The clinical landscape of BCIs for communication and rehabilitation. | [DOI](https://doi.org/10.1038/nrneurol.2016.113) |
 | [Closed-Loop Training of Attention with Real-Time Brain Imaging](https://doi.org/10.1038/nn.3940) | 2015 | Nature Neuroscience | Yoked and no-feedback conditions, the controls that separate signal from response. | [DOI](https://doi.org/10.1038/nn.3940) |
 
----
+## Elsewhere in the Validation tier
 
-**Also in the Validation tier:** [Evaluation & Leakage Control](evaluation.md).
+**[Evaluation & Leakage Control](evaluation.md)** — A favourable split or repeated test-set access can beat a better architecture.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

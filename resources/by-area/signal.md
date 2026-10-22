@@ -4,7 +4,10 @@
 
 What the recording measures, and how much of it can be trusted.
 
-The acquisition method sets the first limit on interpretation: scalp EEG is wearable and inexpensive but mixes neural activity with eye and muscle sources, while intracranial coverage differs from patient to patient and prevents direct transfer to scalp recordings.
+The acquisition method sets the first limit on interpretation: scalp EEG is
+wearable and inexpensive but mixes neural activity with eye and muscle
+sources, while intracranial coverage differs from patient to patient and
+prevents direct transfer to scalp recordings.
 
 **8 references** are listed here; 3 of them are filed primarily under this area.
 
@@ -28,8 +31,8 @@ The acquisition method sets the first limit on interpretation: scalp EEG is wear
 | [Decoding naturalistic affective behaviour from spectro-spatial features in multiday human iEEG](https://doi.org/10.1038/s41562-022-01310-0) | 2022 | Nature Human Behaviour | 116 hours over 11 participants, and a gap between per-person and group accuracy. | [DOI](https://doi.org/10.1038/s41562-022-01310-0) |
 | [Mood variations decoded from multi-site intracranial human brain activity](https://doi.org/10.1038/nbt.4200) | 2018 | Nature Biotechnology | Multiday intracranial mood tracking, the basis for the Lab level. | [DOI](https://doi.org/10.1038/nbt.4200) |
 
----
+## Elsewhere in the Foundations tier
 
-**Also in the Foundations tier:** [Affective Targets & Corpora](corpora.md).
+**[Affective Targets & Corpora](corpora.md)** — Why a measurable proxy stands in for emotion, and what it then means.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

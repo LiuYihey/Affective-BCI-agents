@@ -6,7 +6,7 @@ what to do when the estimate is wrong.
 
 <img src="../assets/figures/sense_think_act.png" width="100%" alt="Sense, Think and Act: the closed loop from neural signal to user-facing action, with the gate that decides what reaches the user">
 
----
+<p align="center"><sub><b>Sense — Think — Act</b> — the closed loop, and the stage most systems stop at.</sub></p>
 
 ## Sense, Think, Act
 
@@ -112,8 +112,6 @@ recording is drawn from a different distribution than the last.
 - [ ] Report the **outcome** for the person, not only the intermediate
       accuracy. A system that improves an accuracy and does not help anyone is
       a measurement, not a system.
-
----
 
 ## Related
 

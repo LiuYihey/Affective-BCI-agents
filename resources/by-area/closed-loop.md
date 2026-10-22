@@ -4,7 +4,10 @@
 
 Sense proposes, Act decides, a harness keeps the system inside what was tested.
 
-Sense turns the signal into a belief, Think proposes an action, Act decides what may reach the user. A harness keeps an adaptive system inside the range in which it was tested. Most published systems stop after Sense and report an accuracy; the loop is where the hard problems live.
+Sense turns the signal into a belief, Think proposes an action, Act decides
+what may reach the user. A harness keeps an adaptive system inside the range
+in which it was tested. Most published systems stop after Sense and report
+an accuracy; the loop is where the hard problems live.
 
 **19 references** are listed here; 11 of them are filed primarily under this area.
 
@@ -39,8 +42,8 @@ Sense turns the signal into a belief, Think proposes an action, Act decides what
 | [Neuroprosthesis for Decoding Speech in a Paralyzed Person with Anarthria](https://doi.org/10.1056/NEJMoa2027540) | 2021 | New England Journal of Medicine | Speech decoded in a person who cannot speak. | [DOI](https://doi.org/10.1056/NEJMoa2027540) |
 | [Brain–machine interfaces from motor to mood](https://doi.org/10.1038/s41593-019-0488-y) | 2019 | Nature Neuroscience | From motor control to mood: what brain-machine interfaces could reach. | [DOI](https://doi.org/10.1038/s41593-019-0488-y) |
 
----
+## Elsewhere in the Systems tier
 
-**Also in the Systems tier:** [Application Domains](applications.md).
+**[Application Domains](applications.md)** — Four families of system, and what each does with an estimate once it has it.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

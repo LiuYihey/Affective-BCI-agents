@@ -37,5 +37,9 @@ transfer to another.
 | **Multiday iEEG** | 11 participants; 116 h of recording | Implanted iEEG | Affective behavior | Observer annotation of spontaneous behavior from video | [source](https://doi.org/10.1038/s41562-022-01310-0) |
 | **Subcallosal cingulate DBS** | 6 participants with LFP (cohort of 10); 24-week follow-up | Implanted LFP in stimulation-off windows | Recovery trajectory | Clinician-rated response and remission criteria | [source](https://doi.org/10.1038/s41586-023-06541-3) |
 
+## The same corpora, by scale
+
 ![Participants per corpus, log scale, grouped by how the target was elicited](../assets/figures/corpora_scale.png)
+
+<p align="center"><sub><b>Corpus scale</b> — participants per corpus on a log scale, grouped by how the target was elicited.</sub></p>
 

@@ -4,7 +4,10 @@
 
 A favourable split or repeated test-set access can beat a better architecture.
 
-The test split decides which question an accuracy answers. A favourable split or repeated access to the test set can beat a better architecture, and a model can reach a high score by reading a spectral confound rather than the variable of interest.
+The test split decides which question an accuracy answers, and a model can
+reach a high score by reading a spectral confound rather than the variable
+of interest. Reporting the split, the held-out unit, and the controls
+against leakage is the minimum for a number to mean anything.
 
 **9 references** are listed here; 4 of them are filed primarily under this area.
 
@@ -29,8 +32,8 @@ The test split decides which question an accuracy answers. A favourable split or
 | [Interpretable Dual-Filter Fuzzy Neural Networks for Affective Brain-Computer Interfaces](https://doi.org/10.48550/arXiv.2502.17445) | 2025 |  | A fuzzy model whose filters are readable by a person. | [DOI](https://doi.org/10.48550/arXiv.2502.17445) [arXiv](https://arxiv.org/abs/2502.17445) |
 | [Decoding naturalistic affective behaviour from spectro-spatial features in multiday human iEEG](https://doi.org/10.1038/s41562-022-01310-0) | 2022 | Nature Human Behaviour | 116 hours over 11 participants, and a gap between per-person and group accuracy. | [DOI](https://doi.org/10.1038/s41562-022-01310-0) |
 
----
+## Elsewhere in the Validation tier
 
-**Also in the Validation tier:** [Evidence Maturity](maturity.md).
+**[Evidence Maturity](maturity.md)** — Lab estimates the state; Pilot changes something; Field holds up over time.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

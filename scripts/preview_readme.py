@@ -1,4 +1,4 @@
-"""Render the README the way GitHub does, into a local HTML preview.
+"""Render a Markdown page the way GitHub does, into a local HTML preview.
 
 GitHub's own renderer is not available offline, so this approximates it: the
 Markdown is converted with tables, fenced code, and raw HTML enabled, then
@@ -10,20 +10,20 @@ Not part of the repository's checks; a local drafting aid. It needs one
 package that the checks do not:
 
     pip install markdown
-    python scripts/preview_readme.py
+    python scripts/preview_readme.py                  # README.md
+    python scripts/preview_readme.py resources/by-area/evaluation.md
 """
 
 from __future__ import annotations
 
-import http.server
-import pathlib
+import os
 import re
-import socketserver
+import sys
+from pathlib import Path
 
 import markdown
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-PORT = 8765
+ROOT = Path(__file__).resolve().parent.parent
 
 CSS = """
 body { margin: 0; background: #f6f8fa; font-family: -apple-system, "Segoe UI",
@@ -50,12 +50,16 @@ body { margin: 0; background: #f6f8fa; font-family: -apple-system, "Segoe UI",
     overflow: auto; }
 .markdown-body pre code { background: none; padding: 0; }
 .markdown-body a { color: #0969da; text-decoration: none; }
+.markdown-body p[align="center"] { margin: 8px 0 16px; }
+.markdown-body p[align="center"] sub { color: #59636e; font-size: 12px;
+    line-height: 1.4; }
 """
 
 
 CENTRED_BLOCK = re.compile(
     r'<div align="center">(?P<body>.*?)</div>', re.S)
 CELL = re.compile(r'(<td[^>]*>)(?P<body>.*?)(</td>)', re.S)
+IMG_SRC = re.compile(r'(<img[^>]*\ssrc=")([^"]+)(")')
 
 
 def render_block(match: re.Match) -> str:
@@ -74,23 +78,43 @@ def render_cell(match: re.Match) -> str:
     return "%s%s%s" % (match.group(1), inner, match.group(3))
 
 
-def build() -> str:
-    text = (ROOT / "README.md").read_text(encoding="utf-8")
+def build(source: str) -> str:
+    path = (ROOT / source).resolve()
+    text = path.read_text(encoding="utf-8")
     # GitHub parses Markdown inside raw HTML blocks and inside table cells;
     # the library does not, so those are rendered separately and put back.
     text = CENTRED_BLOCK.sub(render_block, text)
     text = CELL.sub(render_cell, text)
     body = markdown.markdown(
         text, extensions=["tables", "fenced_code"], output_format="html5")
+    # The preview always lives at the repository root, so a page's own
+    # relative image paths have to be rewritten to point at the same files.
+    prefix = os.path.relpath(path.parent, ROOT).replace(os.sep, "/")
+    if prefix == ".":
+        prefix = ""
+    else:
+        prefix += "/"
+
+    def fix_src(match: re.Match) -> str:
+        src = match.group(2)
+        if src.startswith(("http://", "https://", "/")):
+            return match.group(0)
+        return "%s%s%s" % (match.group(1), prefix + src, match.group(3))
+
+    body = IMG_SRC.sub(fix_src, body)
     return ("<!doctype html><html><head><meta charset='utf-8'>"
             "<meta name='viewport' content='width=device-width, initial-scale=1'>"
             "<title>Affective BCI Agents</title><style>%s</style></head>"
             "<body><div class='page'><article class='markdown-body'>%s"
             "</article></div></body></html>" % (CSS, body))
 
+
 def main() -> None:
-    out = ROOT / "_preview.html"
-    out.write_text(build(), encoding="utf-8")
+    source = sys.argv[1] if len(sys.argv) > 1 else "README.md"
+    name = Path(source).stem
+    out = ROOT / ("_preview.html" if source == "README.md"
+                  else "_preview_%s.html" % name)
+    out.write_text(build(source), encoding="utf-8")
     print("wrote", out)
 
 

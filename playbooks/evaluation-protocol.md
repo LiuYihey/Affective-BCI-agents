@@ -3,8 +3,6 @@
 Run this before you report an accuracy. The purpose is not to make the number
 larger — it is to make the number answer a question someone can act on.
 
----
-
 ## 1. Write down the claim first
 
 Before touching a split, finish this sentence:
@@ -91,8 +89,6 @@ A saliency map is not an explanation.
       cheap check on whether it learned spatial relations or something else.
       ([source](https://doi.org/10.48550/arXiv.2606.15278))
 
----
-
 ## Common failure modes
 
 | What was reported | What it actually shows |
@@ -102,8 +98,6 @@ A saliency map is not an explanation.
 | Per-person 71%, group 62% | Personalisation is worth ~9 points |
 | Cross-dataset 55%, within-dataset 91% | The corpus, not the emotion, carried the signal |
 | Accuracy with no variance across subjects | Something leaked |
-
----
 
 ## Related
 

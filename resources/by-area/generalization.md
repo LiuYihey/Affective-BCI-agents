@@ -4,7 +4,10 @@
 
 The unit held out during testing states how far a result can travel.
 
-Recordings change across people, across sessions, and across devices. The amount of target-side data available for adaptation is part of the method rather than a detail of the protocol, and a method that needs a labelled target is a method that has to be re-run for every new user.
+Recordings change across people, across sessions, and across devices. The
+amount of target-side data available for adaptation is part of the method
+rather than a detail of the protocol, and a method that needs a labelled
+target is a method that has to be re-run for every new user.
 
 **36 references** are listed here; 32 of them are filed primarily under this area.
 
@@ -56,8 +59,8 @@ Recordings change across people, across sessions, and across devices. The amount
 | [Decoding naturalistic affective behaviour from spectro-spatial features in multiday human iEEG](https://doi.org/10.1038/s41562-022-01310-0) | 2022 | Nature Human Behaviour | 116 hours over 11 participants, and a gap between per-person and group accuracy. | [DOI](https://doi.org/10.1038/s41562-022-01310-0) |
 | [Intracranial Neural Biomarkers of Psychiatric Symptoms and Their Utility for Guiding Neuromodulation Therapy: A Systematic Review](https://doi.org/10.1016/j.biopsych.2025.10.005) | 2026 | Biological Psychiatry | Which intracranial biomarkers could actually guide stimulation. | [DOI](https://doi.org/10.1016/j.biopsych.2025.10.005) |
 
----
+## Elsewhere in the Methods tier
 
-**Also in the Methods tier:** [Decoding Architectures](architectures.md).
+**[Decoding Architectures](architectures.md)** — How a recording is organised, and which objective decides what the model keeps.
 
 All nine areas: [research-area index](README.md) · back to the [resource index](../README.md).

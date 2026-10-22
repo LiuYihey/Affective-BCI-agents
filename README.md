@@ -16,8 +16,6 @@
 
 </div>
 
----
-
 ## What this is
 
 Affective BCI turns a brain signal into something that **helps a person** — a
@@ -32,12 +30,12 @@ reader of the survey and a reader of this index use the same words.
 
 <img src="assets/figures/sense_think_act.png" width="100%" alt="Sense, Think and Act: the closed loop from neural signal to user-facing action, with the gate that decides what reaches the user">
 
-**Sense — Think — Act.** The signal becomes a belief, the belief becomes a
-proposal, and something decides whether the proposal reaches the person. Most
-systems in this field stop after the first step and report an accuracy; the
-loop is where the hard problems live.
+<p align="center"><sub><b>Sense — Think — Act</b> — the closed loop, and the stage most systems stop at.</sub></p>
 
----
+The signal becomes a belief, the belief becomes a proposal, and something
+decides whether the proposal reaches the person. Most systems in this field
+stop after the first step and report an accuracy; the loop is where the hard
+problems live.
 
 ## Start here
 
@@ -59,10 +57,10 @@ loop is where the hard problems live.
 
 **Building a system**
 
-4. [Generalization & Transfer](resources/by-area/generalization.md) — will it
+1. [Generalization & Transfer](resources/by-area/generalization.md) — will it
    work on a person you have never seen
-5. [Decoding Architectures](resources/by-area/architectures.md) — what to build
-6. [Application Domains](resources/by-area/applications.md) — where it goes
+2. [Decoding Architectures](resources/by-area/architectures.md) — what to build
+3. [Application Domains](resources/by-area/applications.md) — where it goes
 
 </td>
 </tr>
@@ -94,8 +92,6 @@ an issue instead, and say which area the reference belongs to.
 </tr>
 </table>
 
----
-
 ## The research areas
 
 Nine areas, in five tiers. The tiers are the order a reader meets them in:
@@ -104,6 +100,8 @@ be believed, what it is used for, and what has to be settled before any of it
 runs.
 
 <img src="assets/figures/taxonomy.png" width="100%" alt="Nine research areas in five tiers: Foundations (signal acquisition and quality, affective targets and corpora), Methods (decoding architectures, generalization and transfer), Validation (evaluation and leakage control, evidence maturity), Systems (closed-loop systems, application domains), and Boundaries (governance and ethics)">
+
+<p align="center"><sub><b>The taxonomy</b> — five tiers, nine areas, and the four things each area is judged by.</sub></p>
 
 | Tier | Research area | What it settles | Refs |
 |:--|:--|:--|--:|
@@ -122,11 +120,11 @@ The nine areas in one table: [research-area index](resources/by-area/README.md).
 A reference is filed under every area it informs, so the counts above sum to
 more than 127. The area it informs most often is its primary home.
 
----
-
 ## Four kinds of system
 
 <img src="assets/figures/applications.png" width="100%" alt="Four families of affective BCI system: affect monitoring and assessment, neurofeedback and self-regulation, neuroadaptive interfaces, and responsive neuromodulation">
+
+<p align="center"><sub><b>Four families of system</b> — what each one does with an estimate once it has it.</sub></p>
 
 **Monitoring** estimates a state and stops there. **Neurofeedback** hands the
 state back to the person to regulate. **Neuroadaptive** interfaces change the
@@ -134,11 +132,11 @@ environment to fit the person. **Responsive neuromodulation** changes the
 person's brain state directly. The four are not interchangeable, and a result
 from one does not transfer to another.
 
----
-
 ## Corpora and evidence
 
 <img src="assets/figures/corpora_scale.png" width="100%" alt="Participants per corpus, log scale, grouped by how the target was elicited">
+
+<p align="center"><sub><b>Corpus scale</b> — participants per corpus on a log scale, grouped by how the target was elicited.</sub></p>
 
 **Corpora.** Sixteen corpora, grouped by how the target was elicited — by the
 experimenter, reported by the participant, or read from behaviour. The groups
@@ -149,6 +147,8 @@ are not interchangeable, and a number from one does not transfer to another.
 <td width="52%" valign="middle" align="center">
 
 <img src="assets/figures/levels.png" width="500" alt="Lab, Pilot and Field: what each maturity level tests">
+
+<p align="center"><sub><b>Lab · Pilot · Field</b> — what each level of evidence tests.</sub></p>
 
 </td>
 <td valign="middle">
@@ -165,8 +165,6 @@ because the evaluation was thorough.
 </tr>
 </table>
 
----
-
 ## What is here
 
 | Path | What it holds |
@@ -177,7 +175,7 @@ because the evaluation was thorough.
 | [`resources/corpora.md`](resources/corpora.md) | All 16 corpora, with scale, modality, target and source |
 | [`playbooks/`](playbooks/README.md) | Checklists for designing an evaluation, a loop, or a review |
 | [`assets/figures/`](assets/figures) | Figures, exported at 200 dpi |
-| [`scripts/`](scripts) | The generator, the figure builders, and the four checkers |
+| [`scripts/`](scripts) | The generator, the figure builders, and the five checkers |
 
 Every reference is one click away, and the links are verified in CI, so a dead
 DOI fails the build rather than sitting in a table.
@@ -185,9 +183,8 @@ DOI fails the build rather than sitting in a table.
 ```
 python scripts/check_index.py          # the index agrees with itself
 python scripts/check_links.py          # verify every link
+python scripts/check_layout.py         # the pages follow the layout conventions
 ```
-
----
 
 ## Contributing
 
@@ -197,8 +194,6 @@ the field should be measured. See [CONTRIBUTING.md](CONTRIBUTING.md).
 The pages under `resources/` are generated from the survey's own source, which
 is not public, so a pull request cannot change them. Open an issue instead,
 and say which area the reference belongs to.
-
----
 
 <div align="center">
 

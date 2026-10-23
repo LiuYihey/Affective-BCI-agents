@@ -174,7 +174,6 @@ because the evaluation was thorough.
 | Filter the index yourself | [The index as data](resources/papers.json) |
 | Compare the corpora | [All 16 corpora](resources/corpora.md) |
 | Work through a checklist | [Playbooks](playbooks/README.md) |
-| Reuse the figures | [Figures](assets/figures) |
 
 Every reference links to the publisher's page, and to the preprint or the code
 where one exists.
@@ -190,3 +189,5 @@ the field should be measured — all of it welcome. See
 **If this map was useful, a star helps others find it.**
 
 </div>
+
+

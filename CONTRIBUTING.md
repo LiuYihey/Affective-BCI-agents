@@ -59,6 +59,10 @@ to the people changing the repository rather than to the people reading it.
 `check_voice.py` enforces the split. If a reader-facing page starts
 describing the build, the check fails and the material moves here.
 
+The figures in `assets/figures/` are the survey's own, and the survey is not
+published yet, so the pages do not offer them for reuse or link them as a set
+to download. If you add a figure, keep it in the page that needs it.
+
 ## Page layout
 
 GitHub draws a rule under every second-level heading. A page that also puts a

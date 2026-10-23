@@ -60,6 +60,16 @@ BANNED = [
     (re.compile(r"\bregenerat(?:e|es|ed|ing|ion)\b", re.IGNORECASE),
      "how a file was produced"),
     (re.compile(r"\bnot public\b", re.IGNORECASE), "the private source"),
+    # The figures come from the survey, which is not published yet, so there
+    # is nothing here to offer a reader for reuse. The pages must not imply
+    # otherwise, and must not link the figure directory as a set to download.
+    (re.compile(r"\b(?:re-?use|re-?using|borrowing)\b[^.\n]{0,40}"
+                r"\b(?:figures?|images?|artwork|diagrams?)\b", re.IGNORECASE),
+     "an offer to reuse the figures"),
+    (re.compile(r"\b(?:figures?|images?|artwork|diagrams?)\b[^.\n]{0,40}"
+                r"\b(?:re-?used|borrowed|redistributed)\b", re.IGNORECASE),
+     "an offer to reuse the figures"),
+    (re.compile(r"\]\([^)]*assets/figures\)"), "a link to the figure directory"),
 ]
 
 

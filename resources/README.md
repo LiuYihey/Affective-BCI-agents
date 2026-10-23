@@ -3,8 +3,8 @@
 127 references from the affective BCI literature, every one linked. Organised by
 the **research area** a reference belongs to, not by the order of a paper.
 
-**188 links, all verified.** The link checker runs in CI, so a dead DOI fails
-the build instead of sitting in a table.
+**188 links.** Every reference is one click from here — to the publisher's page,
+and to the preprint or the code where one exists.
 
 ## The nine research areas
 
@@ -70,18 +70,6 @@ because a number from one group does not transfer to another.
 <img src="../assets/figures/corpora_scale.png" width="100%" alt="Participants per corpus, log scale, grouped by how the target was elicited">
 
 <p align="center"><sub><b>Corpus scale</b> — participants per corpus on a log scale, grouped by how the target was elicited.</sub></p>
-
-## Regenerating
-
-```
-python scripts/check_index.py          # the index agrees with itself
-python scripts/check_links.py          # verify every link resolves
-python scripts/check_citations.py      # verify prose citations match the index
-python scripts/check_relative_links.py # verify relative paths point at real files
-python scripts/check_layout.py         # verify the pages follow the layout conventions
-```
-
-The index is generated, not hand-written. Edit the generator, not the output.
 
 ## Related
 

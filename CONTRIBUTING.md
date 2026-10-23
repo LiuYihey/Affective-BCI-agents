@@ -39,11 +39,25 @@ python scripts/check_index.py         # the index agrees with itself
 python scripts/check_citations.py      # prose citations match the index
 python scripts/check_relative_links.py # relative paths point at real files
 python scripts/check_links.py          # every link still resolves
-python scripts/check_layout.py        # the pages follow the layout conventions
+python scripts/check_layout.py         # the pages follow the layout conventions
+python scripts/check_voice.py          # reader-facing pages stay reader-facing
 ```
 
-All five run in CI on every push, so a pull request that breaks any of them
+All six run in CI on every push, so a pull request that breaks any of them
 fails the build rather than landing broken.
+
+## Two audiences
+
+The repository has two audiences, and a page belongs to one of them.
+
+The **reader-facing** pages — `README.md`, `resources/`, `playbooks/` — are
+read by people looking for a paper, a corpus, or a checklist. They talk about
+the field. A line about how the repository is generated, which script checks
+what, or how CI is wired belongs to this page instead, because it is addressed
+to the people changing the repository rather than to the people reading it.
+
+`check_voice.py` enforces the split. If a reader-facing page starts
+describing the build, the check fails and the material moves here.
 
 ## Page layout
 

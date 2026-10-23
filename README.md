@@ -6,11 +6,11 @@
 
 **A working map of the field that turns a brain signal into an action.**
 
-127 references · 9 research areas · 16 corpora · 188 verified links
+127 references · 9 research areas · 16 corpora · 188 links
 
 [![References](https://img.shields.io/badge/references-127-2F6EA5?style=flat-square)](resources/papers.md)
 [![Areas](https://img.shields.io/badge/research%20areas-9-2F6EA5?style=flat-square)](resources/by-area/README.md)
-[![Links](https://img.shields.io/badge/links-188%20verified-0FDC78?style=flat-square)](resources/README.md)
+[![Links](https://img.shields.io/badge/links-188-0FDC78?style=flat-square)](resources/README.md)
 [![Code](https://img.shields.io/badge/public%20code-13-2F6EA5?style=flat-square)](resources/papers.md)
 [![License](https://img.shields.io/badge/license-MIT-C4622D?style=flat-square)](LICENSE)
 
@@ -25,8 +25,8 @@ the chain breaks in its own way.
 
 This repository is a map of that chain. Every reference is filed under the
 **research area** it belongs to, with a note on what it settles and where it
-falls short. The areas are the ones the survey itself is built from, so a
-reader of the survey and a reader of this index use the same words.
+falls short. The nine areas are the ones this field is actually organised
+around, so the map and the literature use the same words.
 
 <img src="assets/figures/sense_think_act.png" width="100%" alt="Sense, Think and Act: the closed loop from neural signal to user-facing action, with the gate that decides what reaches the user">
 
@@ -81,8 +81,8 @@ problems live.
 
 **Working on the index**
 
-The index is generated, so a pull request cannot change what it contains. Open
-an issue instead, and say which area the reference belongs to.
+Found a paper that should be here, or a corpus that was missed? Open an issue
+and say which area it belongs to.
 
 - [Add a reference](.github/ISSUE_TEMPLATE/add-reference.yml)
 - [Add a dataset](.github/ISSUE_TEMPLATE/add-dataset.yml)
@@ -167,33 +167,23 @@ because the evaluation was thorough.
 
 ## What is here
 
-| Path | What it holds |
+| If you want to | Go to |
 |:--|:--|
-| [`resources/by-area/`](resources/by-area/README.md) | The nine research-area pages — every reference, linked, with a note |
-| [`resources/papers.md`](resources/papers.md) | All 127 references in one table |
-| [`resources/papers.json`](resources/papers.json) | The same index as data, for filtering |
-| [`resources/corpora.md`](resources/corpora.md) | All 16 corpora, with scale, modality, target and source |
-| [`playbooks/`](playbooks/README.md) | Checklists for designing an evaluation, a loop, or a review |
-| [`assets/figures/`](assets/figures) | Figures, exported at 200 dpi |
-| [`scripts/`](scripts) | The generator, the figure builders, and the five checkers |
+| Browse the references by research area | [The nine research areas](resources/by-area/README.md) |
+| See every reference in one table | [All 127 references](resources/papers.md) |
+| Filter the index yourself | [The index as data](resources/papers.json) |
+| Compare the corpora | [All 16 corpora](resources/corpora.md) |
+| Work through a checklist | [Playbooks](playbooks/README.md) |
+| Reuse the figures | [Figures](assets/figures) |
 
-Every reference is one click away, and the links are verified in CI, so a dead
-DOI fails the build rather than sitting in a table.
-
-```
-python scripts/check_index.py          # the index agrees with itself
-python scripts/check_links.py          # verify every link
-python scripts/check_layout.py         # the pages follow the layout conventions
-```
+Every reference links to the publisher's page, and to the preprint or the code
+where one exists.
 
 ## Contributing
 
-Additions welcome — a corpus, a method, a system, a critique that changes how
-the field should be measured. See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-The pages under `resources/` are generated from the survey's own source, which
-is not public, so a pull request cannot change them. Open an issue instead,
-and say which area the reference belongs to.
+A missing reference, a corpus, a method, a system, a critique that changes how
+the field should be measured — all of it welcome. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 <div align="center">
 

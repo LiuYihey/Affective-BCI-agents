@@ -67,3 +67,17 @@ jobs:
       # above the heading reads as two separators. This keeps that fixed.
       - name: Check the pages follow the layout conventions
         run: python scripts/check_layout.py
+
+  voice:
+    name: Reader-facing voice
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The landing pages and the resource pages are read by people looking for
+      # a paper. A line about how the repository is generated or which script
+      # checks what belongs on the contributor page, not on those.
+      - name: Check reader-facing pages stay reader-facing
+        run: python scripts/check_voice.py
